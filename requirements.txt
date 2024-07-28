@@ -1,0 +1,15 @@
+imaplib
+tkinter
+smtplib
+email
+pyautogui
+pyecharts
+pdfplumber
+jieba
+mutagen
+pygame
+qrcode
+Pillow
+pandas
+pyperclip
+blind_watermark

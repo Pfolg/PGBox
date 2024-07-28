@@ -4,28 +4,22 @@
 # 2024/7/20   13:23
 import os
 from tkinter import ttk
-import plugins.QRCodeMaker as qr
-import plugins.makeFilesPhot as mf
-import plugins.musicPlayer as mp
 import win32com.client
 import time
 import requests
-import plugins.FrameSetting as st
-import plugins.randomName as rm
-import plugins.otherFunction as ofc
-import plugins.ThirdPackage as tp
-import plugins.keyWordsAnalysis as ka
 import random
-import plugins.FrameWin as fw
-import plugins.singleDouble as sd
-import plugins.BoxMails as bm
-import plugins.findLocation as fl
+from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
+    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction
 
 
 def basicFrame0(w, h, window):
     try:
         with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
             listSentence = file.readlines()
+    except FileNotFoundError:
+        listSentence = ""
+
+    try:
         if listSentence:
             newList = [s.rstrip('\r\t\n') for s in listSentence]
             sentence = newList[random.randint(0, len(newList) - 1)]
@@ -67,9 +61,9 @@ def basicFrame0(w, h, window):
     # 初始窗口
     frame0 = ttk.Frame(window)
     frame0.place(relx=0, rely=0, width=w, height=h)
-    ttk.Label(frame0, width=w, background="#61afef", compound="center").place(relx=0, rely=.02, height=70)
-    ttk.Label(frame0, text="    " + sentence, font=("微软雅黑", 10), background="#61afef",
-              compound="center", foreground="#FFFFFF").place(
+    ttk.Label(frame0, width=w, background="#f0d2dd", compound="center").place(relx=0, rely=.02, height=70)
+    ttk.Label(frame0, text="    " + sentence, font=("微软雅黑", 10), background="#f0d2dd",
+              compound="center", foreground="#706b67").place(
         relx=0, rely=.02, height=70)
 
     # 产生frame框架
@@ -83,6 +77,8 @@ def basicFrame0(w, h, window):
     frameClick = ttk.Frame(window)
     frameMail = ttk.Frame(window)
     frameLonLat = ttk.Frame(window)
+    frameFT = ttk.Frame(window)
+    frameBlindWaterMark = ttk.Frame(window)
 
     # 最多34个，不能再多了，多了就要重构一下了
     # 由于循环的关系，每隔5个按钮就会跳过一个
@@ -103,30 +99,36 @@ def basicFrame0(w, h, window):
 
         "Bug-2": 2,
 
+        "文本翻译": frameFT,
+        "盲水印工具": frameBlindWaterMark,
 
     }
 
     "主功能设定"
     # 批量创建文件（文件夹）
-    mf.makeFilesPhot(frameMakeFiles)
+    makeFilesPhot.makeFilesPhot(frameMakeFiles)
     # 音乐播放器
-    mp.musicPlayer(frameMusicPlayer)
+    musicPlayer.musicPlayer(frameMusicPlayer)
     # 二维码生成器
-    qr.QRCodeMaker(frameQR)
+    QRCodeMaker.QRCodeMaker(frameQR)
     # 随机点名
-    rm.randomName(frameRandomName)
+    randomName.randomName(frameRandomName)
     # Python第三方库
-    tp.ThirdPackage(framePythonPackage)
+    ThirdPackage.ThirdPackage(framePythonPackage)
     # 关键词分析
-    ka.analysisWindow(frameKeyWord)
+    keyWordsAnalysis.analysisWindow(frameKeyWord)
     # 电脑功能
-    fw.winFunction(frameWin)
+    FrameWin.winFunction(frameWin)
     # 自动点击
-    sd.singleDouble(frameClick)
+    singleDouble.singleDouble(frameClick)
     # 邮件
-    bm.mainMail(frameMail)
+    BoxMails.mainMail(frameMail)
     # 经纬度
-    fl.flFrame(frameLonLat)
+    findLocation.flFrame(frameLonLat)
+    # 文本翻译
+    frameTranslate.translateFrame(frameFT)
+    # 盲水印
+    FBWM.getFileFrame(frameBlindWaterMark)
 
     # 5行7列
     i = 0
@@ -144,12 +146,12 @@ def basicFrame0(w, h, window):
 
     # 设置
     frameSetting = ttk.Frame(window)
-    st.frameSetting(frameSetting)
+    FrameSetting.frameSetting(frameSetting)
     buttons(frameSetting, "设置", .9, .9, 8)
 
     # 其他功能(私有功能)
     frameOtherFunctions = ttk.Frame(window)
-    ofc.otherFunction(frameOtherFunctions)
+    otherFunction.otherFunction(frameOtherFunctions)
     buttons(frameOtherFunctions, "其他功能", .82, .8)
 
     ttk.Button(frame0, text="关于ToolsBox", command=lambda: os.system(".\\README.md")).place(relx=.75, rely=.9)
