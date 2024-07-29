@@ -71,7 +71,8 @@ def translateFrame(frame):
                         "EXAMPLE: LANGPAIR=EN|IT USING 2 LETTER ISO OR RFC3066 LIKE ZH-CN. ALMOST ALL LANGUAGES "
                         "SUPPORTED BUT SOME MAY HAVE NO CONTENT.\t"
                         "MAX ALLOWED QUERY : 500 CHARS".lower() +
-                        "\n当然，你也可以自己找语言标识符然后翻译。")
+                        "\n当然，你也可以自己找语言标识符然后翻译。"
+                        "\nThe plugin needs network.")
     exampleLabel["state"] = "disabled"
     # 设置输入框
     inputBox = ScrolledText(frame, height=16, width=40)

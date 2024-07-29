@@ -2,12 +2,12 @@
 # Environment    PyCharm
 # File_name   ThirdPackage |User    Pfolg
 # 2024/7/20   21:55
+import threading
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import time
 import os
-import threading
 
 listCommand = [
     "pip config unset global.index-url",
@@ -33,9 +33,6 @@ def osRun():
     os.system(".\\run.bat")
     time.sleep(0.5)
     os.remove(".\\run.bat")
-
-
-smoothRun = threading.Thread(target=osRun)
 
 
 def process(vl: int):
@@ -83,7 +80,9 @@ def process(vl: int):
 
     with open(".\\run.bat", "w", encoding="utf-8") as file:
         file.write(text + "\npause")
-    smoothRun.start()
+    x = threading.Thread(target=osRun)
+    x.start()
+    x = None
 
 
 def ThirdPackage(frame):
@@ -116,15 +115,8 @@ def ThirdPackage(frame):
     b6 = ttk.Button(frame, text="自动升级包", width=16, command=lambda: process(8))
 
     def forgetAll():
-        l1.place_forget()
-        e1.place_forget()
-        b1.place_forget()
-        b2.place_forget()
-        b3.place_forget()
-        c1.place_forget()
-        b4.place_forget()
-        b5.place_forget()
-        b6.place_forget()
+        for bt in [l1, e1, b1, b2, b3, c1, b4, b5, b6]:
+            bt.place_forget()
 
     def nextStep():
         global value
@@ -174,5 +166,5 @@ def ThirdPackage(frame):
            "    否则会导致pip的异常。")
 
     ttk.Button(frame, text="注意事项", width=8,
-               command=lambda: messagebox.showinfo(title="注意事项", message=msg)).place(relx=.9,rely=.8)
+               command=lambda: messagebox.showinfo(title="注意事项", message=msg)).place(relx=.9, rely=.8)
     ttk.Button(frame, text="确定", width=8, command=nextStep).place(relx=.08, rely=.9)

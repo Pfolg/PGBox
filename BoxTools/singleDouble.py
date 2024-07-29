@@ -13,18 +13,19 @@ import threading
 def writeClick():
     x = targetFile.get()
     with open(".\\run.bat", "w", encoding="utf-8") as file:
-        file.write(f"start .\\plugins\\{x}\npause")
+        file.write(f"start .\\BoxTools\\{x}\npause")
 
 
 def runClick():
     x = targetFile.get()
-    os.system(f".\\plugins\\{x}")
+    os.system(f".\\BoxTools\\{x}")
     time.sleep(.5)
 
 
 def myClickRun():
-    allClick = threading.Thread(target=runClick)
-    allClick.start()
+    x = threading.Thread(target=runClick)
+    x.start()
+    x = None
 
 
 "singleClick.py"
