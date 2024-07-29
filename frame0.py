@@ -3,13 +3,23 @@
 # File_name   frame0 |User    Pfolg
 # 2024/7/20   13:23
 import os
-from tkinter import ttk
-import win32com.client
-import time
-import requests
 import random
+import threading
+import time
+from tkinter import ttk
+
+import requests
+import win32com.client
+
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
-    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert
+    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, authorInfor, \
+    readLICENSE
+
+
+def openFile(path=".\\README.md"):
+    kk = threading.Thread(target=lambda: os.system(path))
+    kk.start()
+    kk = None
 
 
 def basicFrame0(w, h, window):
@@ -161,6 +171,14 @@ def basicFrame0(w, h, window):
     otherFunction.otherFunction(frameOtherFunctions)
     buttons(frameOtherFunctions, "其他功能", .82, .8)
 
-    ttk.Button(frame0, text="关于ToolsBox", command=lambda: os.system(".\\README.md")).place(relx=.75, rely=.9)
+    frameAuthor = ttk.Frame(window)
+    authorInfor.authorInfor(frameAuthor)
+    buttons(frameAuthor, "关于作者", .65, .9, 8)
+
+    frameLICENSE = ttk.Frame(window)
+    readLICENSE.readLICENSE(frameLICENSE)
+    buttons(frameLICENSE, "LICENSE", .54, .9, 8)
+
+    ttk.Button(frame0, text="关于ToolsBox", command=openFile).place(relx=.76, rely=.9)
 
     get_time()
