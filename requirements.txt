@@ -13,3 +13,4 @@ Pillow
 pandas
 pyperclip
 blind_watermark
+requests

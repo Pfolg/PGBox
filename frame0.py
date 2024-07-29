@@ -9,10 +9,11 @@ import time
 import requests
 import random
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
-    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction
+    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert
 
 
 def basicFrame0(w, h, window):
+    # 获取首页美文内容
     try:
         with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
             listSentence = file.readlines()
@@ -30,6 +31,7 @@ def basicFrame0(w, h, window):
     except BaseException:
         sentence = ""
 
+    # 获取本地时间并对机主问好
     def get_time():
         time2 = time.strftime('%Y-%m-%d %H:%M:%S')
         clock = ttk.Label(frame0, text=time2, font=10, foreground="#000000")
@@ -48,6 +50,7 @@ def basicFrame0(w, h, window):
         ttk.Label(frame0, text=f"{text} {userName}", foreground="#000000").place(relx=.25, rely=.95)
         clock.after(1000, get_time)  # 1000ms=1s
 
+    # frame切换
     def convertFrame(f1, f2):
         f1.place_forget()
         f2.place(relx=0, rely=0, width=w, height=h)
@@ -79,6 +82,7 @@ def basicFrame0(w, h, window):
     frameLonLat = ttk.Frame(window)
     frameFT = ttk.Frame(window)
     frameBlindWaterMark = ttk.Frame(window)
+    frameMoneyConvert = ttk.Frame(window)
 
     # 最多34个，不能再多了，多了就要重构一下了
     # 由于循环的关系，每隔5个按钮就会跳过一个
@@ -101,6 +105,7 @@ def basicFrame0(w, h, window):
 
         "文本翻译": frameFT,
         "盲水印工具": frameBlindWaterMark,
+        "货币转换器": frameMoneyConvert,
 
     }
 
@@ -129,6 +134,8 @@ def basicFrame0(w, h, window):
     frameTranslate.translateFrame(frameFT)
     # 盲水印
     FBWM.getFileFrame(frameBlindWaterMark)
+    # 货币转换
+    moneyConvert.moneyConvert(frameMoneyConvert)
 
     # 5行7列
     i = 0
