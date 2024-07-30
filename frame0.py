@@ -4,16 +4,15 @@
 # 2024/7/20   13:23
 import os
 import random
+import requests
+import sys
 import threading
 import time
 from tkinter import ttk
-
-import requests
 import win32com.client
-
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
     singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, authorInfor, \
-    readLICENSE
+    readLICENSE, makeKey
 
 
 def openFile(path=".\\README.md"):
@@ -22,24 +21,41 @@ def openFile(path=".\\README.md"):
     kk = None
 
 
-def basicFrame0(w, h, window):
-    # 获取首页美文内容
-    try:
-        with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
-            listSentence = file.readlines()
-    except FileNotFoundError:
-        listSentence = ""
+def beautifulSentence(frame, w):
+    while True:
+        # 获取首页美文内容
+        try:
+            with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
+                listSentence = file.readlines()
+        except FileNotFoundError:
+            listSentence = ""
 
-    try:
-        if listSentence:
-            newList = [s.rstrip('\r\t\n') for s in listSentence]
-            sentence = newList[random.randint(0, len(newList) - 1)]
-        else:
-            url = "https://tenapi.cn/v2/yiyan"
-            content = requests.get(url)
-            sentence = content.text
-    except BaseException:
-        sentence = ""
+        try:
+            if listSentence:
+                newList = [s.rstrip('\r\t\n') for s in listSentence]
+                sentence = newList[random.randint(0, len(newList) - 1)]
+            else:
+                url = "https://tenapi.cn/v2/yiyan"
+                content = requests.get(url)
+                sentence = content.text
+        except BaseException:
+            sentence = ""
+        try:
+            ttk.Label(frame, text="    " + sentence, font=("微软雅黑", 10), background="#f0d2dd",
+                      compound="center", width=w, foreground="#706b67"
+                      ).place(relx=0, rely=.02, height=70)
+        except RuntimeError:
+            sys.exit()
+        # 30秒刷新一次，多了会被网站列入黑名单
+        time.sleep(30)
+
+
+def basicFrame0(w, h, window):
+    # 初始窗口
+    frame0 = ttk.Frame(window)
+    frame0.place(relx=0, rely=0, width=w, height=h)
+    ttk.Label(frame0, width=w, background="#f0d2dd", compound="center").place(relx=0, rely=.02, height=70)
+    threading.Thread(target=lambda: beautifulSentence(frame0, w)).start()
 
     # 获取本地时间并对机主问好
     def get_time():
@@ -71,14 +87,6 @@ def basicFrame0(w, h, window):
         ttk.Button(targetFrame, width=8, text='返回',
                    command=lambda: convertFrame(targetFrame, frame0)).place(relx=.9, rely=.9)
 
-    # 初始窗口
-    frame0 = ttk.Frame(window)
-    frame0.place(relx=0, rely=0, width=w, height=h)
-    ttk.Label(frame0, width=w, background="#f0d2dd", compound="center").place(relx=0, rely=.02, height=70)
-    ttk.Label(frame0, text="    " + sentence, font=("微软雅黑", 10), background="#f0d2dd",
-              compound="center", foreground="#706b67").place(
-        relx=0, rely=.02, height=70)
-
     # 产生frame框架
     frameMakeFiles = ttk.Frame(window)
     frameMusicPlayer = ttk.Frame(window)
@@ -93,6 +101,7 @@ def basicFrame0(w, h, window):
     frameFT = ttk.Frame(window)
     frameBlindWaterMark = ttk.Frame(window)
     frameMoneyConvert = ttk.Frame(window)
+    framePassword = ttk.Frame(window)
 
     # 最多34个，不能再多了，多了就要重构一下了
     # 由于循环的关系，每隔5个按钮就会跳过一个
@@ -116,6 +125,7 @@ def basicFrame0(w, h, window):
         "文本翻译": frameFT,
         "盲水印工具": frameBlindWaterMark,
         "货币转换器": frameMoneyConvert,
+        "密码生成": framePassword,
 
     }
 
@@ -146,6 +156,8 @@ def basicFrame0(w, h, window):
     FBWM.getFileFrame(frameBlindWaterMark)
     # 货币转换
     moneyConvert.moneyConvert(frameMoneyConvert)
+    # 密码生成
+    makeKey.keyFrame(framePassword)
 
     # 5行7列
     i = 0
