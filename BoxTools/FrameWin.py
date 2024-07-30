@@ -33,7 +33,7 @@ lockInfo = ("没有弄懂这个程序怎么运行的请勿使用!\n"
             "BoxTools里有一个[WinLock.py]的文件，\n"
             "将它放到启动文件夹就可以实现掩耳盗铃的电脑锁了，\n"
             "所以极不推荐，\n"
-            "可以利用BoxTools里的[makeKey.py]生成密码的哈希值。")
+            "可以利用[密码生成]生成密码的sha256值。")
 
 btuComDict = {
     "Windows工具": lambda: os.system("start \"\" \"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative "

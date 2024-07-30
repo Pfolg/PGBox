@@ -59,3 +59,4 @@ def authorInfor(frame):
         frame, text="QQ&微信",
         command=None
     ).place(relx=.6, rely=.5)
+

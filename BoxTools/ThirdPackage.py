@@ -87,16 +87,15 @@ def process(vl: int):
 
 def ThirdPackage(frame):
     ttk.Label(frame, text="专为Python懒人打造的交互版pip程序(大概吧)").place(relx=.32, rely=.005)
-    global flag
     flag = tk.IntVar()
-    r0 = ttk.Radiobutton(frame, text="安装包", width=18, variable=flag, value=1)
-    r1 = ttk.Radiobutton(frame, text="卸载包", width=18, variable=flag, value=2)
-    r2 = ttk.Radiobutton(frame, text="添加镜像源", width=18, variable=flag, value=3)
-    r3 = ttk.Radiobutton(frame, text="移除镜像源", width=18, variable=flag, value=4)
-    r4 = ttk.Radiobutton(frame, text="使用镜像源安装某包", width=18, variable=flag, value=5)
-    r5 = ttk.Radiobutton(frame, text="导出已安装包信息", width=18, variable=flag, value=6)
-    r6 = ttk.Radiobutton(frame, text="升级包(不推荐)", width=18, variable=flag, value=7)
-    r7 = ttk.Radiobutton(frame, text="自动升级包(极不推荐)", width=18, variable=flag, value=8)
+    r0 = ttk.Button(frame, text="安装包", width=18, command=lambda: nextStep(1))
+    r1 = ttk.Button(frame, text="卸载包", width=18, command=lambda: nextStep(2))
+    r2 = ttk.Button(frame, text="添加镜像源", width=18, command=lambda: nextStep(3))
+    r3 = ttk.Button(frame, text="移除镜像源", width=18, command=lambda: nextStep(4))
+    r4 = ttk.Button(frame, text="使用镜像源安装某包", width=18, command=lambda: nextStep(5))
+    r5 = ttk.Button(frame, text="导出已安装包信息", width=18, command=lambda: nextStep(6))
+    r6 = ttk.Button(frame, text="升级包(不推荐)", width=18, command=lambda: nextStep(7))
+    r7 = ttk.Button(frame, text="自动升级包(极不推荐)", width=18, command=lambda: nextStep(8))
 
     listRadiobutton = [r0, r1, r2, r3, r4, r5, r6, r7]
     for i in range(len(listRadiobutton)):
@@ -118,9 +117,9 @@ def ThirdPackage(frame):
         for bt in [l1, e1, b1, b2, b3, c1, b4, b5, b6]:
             bt.place_forget()
 
-    def nextStep():
+    def nextStep(x):
         global value
-        value = flag.get()
+        value = x
         if value == 1 or value == 2:
             forgetAll()
             l1.place(relx=.22, rely=.1)
@@ -167,4 +166,3 @@ def ThirdPackage(frame):
 
     ttk.Button(frame, text="注意事项", width=8,
                command=lambda: messagebox.showinfo(title="注意事项", message=msg)).place(relx=.9, rely=.8)
-    ttk.Button(frame, text="确定", width=8, command=nextStep).place(relx=.08, rely=.9)

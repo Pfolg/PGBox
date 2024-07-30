@@ -68,8 +68,8 @@ def moneyConvert(frame):
     ttk.Button(frame, text="召唤真正的货币转换工具", command=openBrowse).place(relx=.4, rely=.9)
 
     ttk.Label(frame, text="From\t\t\t\t\tTo").place(relx=.2, rely=.4)
-    sbox = ttk.Combobox(frame, values=moneyList, width=8)
-    tbox = ttk.Combobox(frame, values=moneyList, width=8)
+    sbox = ttk.Combobox(frame, values=moneyList, width=12)
+    tbox = ttk.Combobox(frame, values=moneyList, width=12)
     sbox.set("人民币")
     tbox.set("美元")
     sbox.place(relx=.32, rely=.4)
