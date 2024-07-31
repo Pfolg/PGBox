@@ -1,9 +1,14 @@
+turtle
+pywin32
+requests
+json
 imaplib
-tkinter
 smtplib
 email
 pyautogui
-pyecharts
+blind_watermark
+pyperclip
+pyautogui
 pdfplumber
 jieba
 mutagen
@@ -11,6 +16,3 @@ pygame
 qrcode
 Pillow
 pandas
-pyperclip
-blind_watermark
-requests
