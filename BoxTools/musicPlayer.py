@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 import pygame
 from tkinter import filedialog
@@ -41,13 +42,14 @@ def get_audio_duration(file_path):
 
 def musicPlayer(window):
     try:
-        with open(r".\setting\Setting-musicPlayer.txt", "r", encoding="utf-8") as file:
-            DefaultPath = file.readline()
-            if DefaultPath == "":
+        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+            myDict = json.load(myF)
+            DefaultPath = myDict.get("musicPlayerDirectory")
+            if not DefaultPath:
                 messagebox.showerror(title="Error",
                                      message="读取音乐文件夹设置生错误，\n请在[../setting/Setting-musicPlayer.txt]内填入音乐文件夹路径\n"
                                              "或者使用设置工具")
-    except FileNotFoundError:
+    except BaseException:
         DefaultPath = r"C:\Users\Default\Music"
 
     def pause_music():

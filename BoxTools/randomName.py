@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import tkinter as tk
 from tkinter import ttk
@@ -64,10 +66,10 @@ def randomName(frame):
     global filePath
     filePath = tk.StringVar()
     try:
-        with open(".\\setting\\Setting-RandomName.txt", "r", encoding="utf-8") as f2:
-            c2 = f2.readline()
-        filePath.set(c2)
-    except FileNotFoundError:
+        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+            myDict = json.load(myF)
+            filePath.set(myDict.get("RandomNameDirectory"))
+    except BaseException:
         pass
     ttk.Label(frame, text="请选择表格文件", font=("微软雅黑", 20)).place(relx=.35, rely=.2)
     file = ttk.Entry(frame, textvariable=filePath, width=40)

@@ -50,7 +50,7 @@ def ConMD5(x):
 
 
 def makeKey(key, num):
-    if key and num:
+    if key and num.isdigit():
         x = strDict.get(key)
         y = int(num)
         if x and y:
@@ -94,4 +94,9 @@ def keyFrame(frame):
     global scText
     scText = ScrolledText(frame, width=60, height=5, state="disabled")
     scText.place(relx=.1, rely=.5)
-    ttk.Button(frame, text="Clear", width=8, command=lambda: scText.delete("1.0", "end")).place(relx=.58, rely=.7)
+
+    def deleteContent():
+        scText.config(state="normal")
+        scText.delete("1.0", "end")
+        scText.config(state="disabled")
+    ttk.Button(frame, text="Clear", width=8, command=deleteContent).place(relx=.58, rely=.7)

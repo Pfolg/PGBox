@@ -9,7 +9,7 @@ from tkinter import messagebox
 import threading
 
 aboutList = ["我是编程路上一个蹒跚学步的婴儿",
-             "我是Python新手村的村民",
+             "我是Python新手村的新人",
              "我是学不进Java的废材",
              "我是一个喜欢花里胡哨的普通人",
              "这个程序是我用来练习和进步的",
@@ -22,13 +22,13 @@ def authorInfor(frame):
     def showLabel():
         i = 0
         while True:
+            if i == len(aboutList):
+                i = 0
             try:
                 a = ttk.Label(frame, text=aboutList[i], font=("微软雅黑", 16), width=40)
                 a.place(relx=.3, rely=.1)
             except RuntimeError:
                 break
-            if i == len(aboutList) - 1:
-                i = 0
             i += 1
             time.sleep(3)
 

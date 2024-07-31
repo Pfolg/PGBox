@@ -3,6 +3,7 @@
 # File_name   BoxMails |User    Pfolg
 # 2024/7/24   13:24
 import imaplib
+import json
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -20,11 +21,12 @@ from tkinter.scrolledtext import ScrolledText
 
 def readMailInfo():
     try:
-        with open(".\\setting\\Setting-mail.txt", "r", encoding="utf-8") as f5:
-            c5 = eval(f5.readline())
-            return c5
-    except FileNotFoundError and IndexError:
-        messagebox.showerror(title="Error!", message="读取邮箱配置信息发生错误，请在[Setting.pyw]中配置")
+        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+            myDict = json.load(myF)
+            mailConfig = [myDict.get("mail"), myDict.get("mailCode")]
+            return mailConfig
+    except BaseException:
+        pass
 
 
 def sendMail(inf):

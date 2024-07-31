@@ -65,10 +65,13 @@ btuComDict = {
     "关于天文": lambda: openUrl("https://stars.chromeexperiments.com/"),
 
     "bug-3": 3,
+
+    "打开程序所在目录": lambda: os.system("start .\\")
 }
 
 
 def winFunction(frame):
+    ttk.Label(frame, text="电脑功能").place(relx=.02, rely=.02)
     i = 0
     j = 1
     for key in btuComDict:

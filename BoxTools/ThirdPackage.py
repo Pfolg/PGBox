@@ -2,6 +2,7 @@
 # Environment    PyCharm
 # File_name   ThirdPackage |User    Pfolg
 # 2024/7/20   21:55
+import json
 import threading
 import tkinter as tk
 from tkinter import ttk
@@ -36,8 +37,12 @@ def osRun():
 
 
 def process(vl: int):
-    with open(".\\setting\\Setting-ThirdPackage.txt", "r", encoding="utf-8") as file:
-        path = file.readline()
+    try:
+        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+            myDict = json.load(myF)
+            path = myDict.get("ThirdPackageOutputFile")
+    except BaseException:
+        pass
     if vl == 4:
         text = listCommand[0]
     elif vl == 3:
