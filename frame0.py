@@ -12,7 +12,7 @@ from tkinter import ttk
 import win32com.client
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
     singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, authorInfor, \
-    readLICENSE, makeKey
+    readLICENSE, makeKey, wifiInfor, frameTD, openWeather
 
 
 def openFile(path=".\\README.md"):
@@ -56,6 +56,9 @@ def basicFrame0(w, h, window):
     frame0.place(relx=0, rely=0, width=w, height=h)
     ttk.Label(frame0, width=w, background="#f0d2dd", compound="center").place(relx=0, rely=.02, height=70)
     threading.Thread(target=lambda: beautifulSentence(frame0, w)).start()
+
+    # 显示天气
+    openWeather.openWeather(frame0)
 
     # 获取本地时间并对机主问好
     def get_time():
@@ -102,6 +105,8 @@ def basicFrame0(w, h, window):
     frameBlindWaterMark = ttk.Frame(window)
     frameMoneyConvert = ttk.Frame(window)
     framePassword = ttk.Frame(window)
+    frameWiFi = ttk.Frame(window)
+    frameM = ttk.Frame(window)
 
     # 最多34个，不能再多了，多了就要重构一下了
     # 由于循环的关系，每隔5个按钮就会跳过一个
@@ -126,6 +131,11 @@ def basicFrame0(w, h, window):
         "盲水印工具": frameBlindWaterMark,
         "货币转换器": frameMoneyConvert,
         "密码生成": framePassword,
+        "WiFi": frameWiFi,
+
+        "Bug-3": 3,
+
+        "二刺猿": frameM,
 
     }
 
@@ -158,6 +168,10 @@ def basicFrame0(w, h, window):
     moneyConvert.moneyConvert(frameMoneyConvert)
     # 密码生成
     makeKey.keyFrame(framePassword)
+    # WiFi
+    wifiInfor.wifiFrame(frameWiFi)
+    # 二刺猿
+    frameTD.winFunction(frameM)
 
     # 5行7列
     i = 0

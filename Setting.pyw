@@ -1,3 +1,4 @@
+import json
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -23,21 +24,6 @@ def find_file(x):
     win.destroy()
 
 
-def saveMusicDirectory():
-    with open(".\\setting\\Setting-musicPlayer.txt", "w", encoding="utf-8") as g1:
-        g1.write(directoryPath.get())
-
-
-def saveRandomName():
-    with open(".\\setting\\Setting-RandomName.txt", "w", encoding="utf-8") as g2:
-        g2.write(excelPath.get())
-
-
-def saveThirdPackage():
-    with open(".\\setting\\Setting-ThirdPackage.txt", "w", encoding="utf-8") as g3:
-        g3.write(TDpath.get())
-
-
 def openAPI():
     if not os.path.isfile(".\\setting\\Setting-APIuse.txt"):
         with open(".\\setting\\Setting-APIuse.txt", "w", encoding="utf-8") as g4:
@@ -49,21 +35,21 @@ def openAPI():
         os.remove(".\\run.bat")
 
 
-def saveMail():
-    if mailCode.get() and mail.get():
-        with open(".\\setting\\Setting-mail.txt", "w", encoding="utf-8") as g5:
-            g5.write(str([mail.get(), mailCode.get()]))
-    else:
-        messagebox.showinfo(title="提示信息", message="未保存邮箱配置!")
-
-
 def save():
     if not os.path.isdir(".\\setting"):
         os.mkdir(".\\setting")
-    saveMusicDirectory()
-    saveRandomName()
-    saveThirdPackage()
-    saveMail()
+    SettingInfor = {
+        "musicPlayerDirectory": directoryPath.get(),
+        "RandomNameDirectory": excelPath.get(),
+        "ThirdPackageOutputFile": TDpath.get(),
+        "mail": mail.get(),
+        "mailCode": mailCode.get(),
+        "city": city.get(),
+        "openweatherAPI": opwAPI.get(),
+    }
+    with open(".\\setting\\Config.txt", "w", encoding="utf-8") as file:
+        json.dump(SettingInfor, file, ensure_ascii=False, indent=4)
+
     messagebox.showinfo(title="提示信息", message="保存成功!\n重启后生效!")
 
 
@@ -77,31 +63,24 @@ if __name__ == '__main__':
     w, h = int(screen_w / 2), int(screen_h / 2)
     window.geometry(f'{w}x{h}+{int(screen_w / 4)}+{int(screen_h / 4)}')
     window.resizable(False, False)
-    window.iconbitmap(".\\ico.ico")
+    window.iconbitmap(".\\resource\\ico.ico")
+
+    global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI
+    (
+        directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI
+    ) = \
+        (
+            tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(),
+            tk.StringVar()
+        )
 
     # 音乐文件夹设置
-    global directoryPath
-    directoryPath = tk.StringVar()
-    try:
-        with open(".\\setting\\Setting-musicPlayer.txt", "r", encoding="utf-8") as f1:
-            c1 = f1.readline()
-        directoryPath.set(c1)
-    except FileNotFoundError:
-        pass
     ttk.Label(window, text="设置[音乐播放器]的音乐文件夹").place(relx=.02, rely=.02)
     fp = ttk.Entry(window, textvariable=directoryPath, width=14)
     fp.place(relx=.25, rely=.018)
     ttk.Button(window, text="选择", command=lambda: find_directory(fp)).place(relx=.4, rely=.015)
 
     # 随机点名文件设置
-    global excelPath
-    excelPath = tk.StringVar()
-    try:
-        with open(".\\setting\\Setting-RandomName.txt", "r", encoding="utf-8") as f2:
-            c2 = f2.readline()
-        excelPath.set(c2)
-    except FileNotFoundError:
-        pass
     ttk.Label(window, text="设置[随机点名]的默认文件").place(relx=.02, rely=.12)
     ep = ttk.Entry(window, textvariable=excelPath, width=14)
     ep.place(relx=.25, rely=.118)
@@ -119,14 +98,6 @@ if __name__ == '__main__':
                            "\n添加到开始菜单:主文件的快捷方式放到[C:\ProgramData\Microsoft\Windows\Start Menu\Programs]"
                            "\n创建桌面快捷方式:\n快捷方式放到桌面就可以了")).place(relx=.07, rely=.2)
 
-    global TDpath
-    TDpath = tk.StringVar()
-    try:
-        with open(".\\setting\\Setting-ThirdPackage.txt", "r", encoding="utf-8") as f3:
-            c3 = f3.readline()
-        TDpath.set(c3)
-    except FileNotFoundError:
-        pass
     ttk.Label(window, text="设置[Python第三方库工具]导出路径(必须是.txt文件结尾)").place(relx=.02, rely=.32)
     tp = ttk.Entry(window, textvariable=TDpath, width=14)
     tp.place(relx=.05, rely=.418)
@@ -143,21 +114,30 @@ if __name__ == '__main__':
                command=lambda: messagebox.showinfo(title="提示信息", message=instruction)).place(relx=.22, rely=.52)
 
     # 设置邮箱，配置授权码
-    global mail, mailCode
-
-    mail, mailCode = tk.StringVar(), tk.StringVar()
     ttk.Label(window, text="配置邮箱").place(relx=.02, rely=.6)
     ttk.Entry(window, width=20, textvariable=mail).place(relx=.1, rely=.6)
     # ttk.Button(window, width=8).place(relx=.28, rely=.598)
     ttk.Label(window, text="配置邮箱授权码").place(relx=.02, rely=.7)
     ttk.Entry(window, width=20, textvariable=mailCode).place(relx=.15, rely=.7)
+
+    # 天气设置
+    ttk.Label(window, text="城市(市的拼音)").place(relx=.02, rely=.8)
+    ttk.Entry(window, width=20, textvariable=city).place(relx=.15, rely=.8)
+    ttk.Label(window, text="openWeather API").place(relx=.02, rely=.9)
+    ttk.Entry(window, width=20, textvariable=opwAPI).place(relx=.2, rely=.9)
+
     try:
-        with open(".\\setting\\Setting-mail.txt", "r", encoding="utf-8") as f5:
-            c5 = eval(f5.readline())
-            mail.set(c5[0])
-            mailCode.set(c5[1])
+        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+            myDict = json.load(myF)
+            directoryPath.set(myDict.get("musicPlayerDirectory"))
+            excelPath.set(myDict.get("RandomNameDirectory"))
+            TDpath.set(myDict.get("ThirdPackageOutputFile"))
+            mail.set(myDict.get("mail"))
+            mailCode.set(myDict.get("mailCode"))
+            city.set(myDict.get("city"))
+            opwAPI.set(myDict.get("openweatherAPI"))
     except BaseException:
         pass
 
-    ttk.Button(window, text="保存", command=save, width=8).place(relx=.9, rely=.9)
+    ttk.Button(window, text="保存", command=save, width=8).place(relx=.9, rely=.02)
     window.mainloop()

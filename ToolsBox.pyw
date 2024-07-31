@@ -2,6 +2,7 @@
 # Environment    PyCharm
 # File_name   ToolsBox |User    Pfolg
 # 2024/7/19   21:42
+import sys
 import tkinter as tk
 import turtle
 import time
