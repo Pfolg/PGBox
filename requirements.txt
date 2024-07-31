@@ -1,10 +1,5 @@
-turtle
 pywin32
 requests
-json
-imaplib
-smtplib
-email
 pyautogui
 blind_watermark
 pyperclip
