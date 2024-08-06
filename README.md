@@ -5,7 +5,7 @@
 
 # 关于
 
-访问官网：https://github.com/Pfolg/ToolsBox
+访问官网：https://github.com/Pfolg/PGBox
 
 此程序基于Python开发，目前功能较少，但是我会不断完善它（大概会一直塞一些功能进去）。
 

@@ -63,7 +63,7 @@ if __name__ == '__main__':
     w, h = int(screen_w / 2), int(screen_h / 2)
     window.geometry(f'{w}x{h}+{int(screen_w / 4)}+{int(screen_h / 4)}')
     window.resizable(False, False)
-    window.iconbitmap(".\\resource\\ico.ico")
+    window.iconbitmap(".\\resource\\pg.ico")
 
     global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI
     (

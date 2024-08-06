@@ -205,6 +205,6 @@ def basicFrame0(w, h, window):
     readLICENSE.readLICENSE(frameLICENSE)
     buttons(frameLICENSE, "LICENSE", .54, .9, 8)
 
-    ttk.Button(frame0, text="关于ToolsBox", command=openFile).place(relx=.76, rely=.9)
+    ttk.Button(frame0, text="关于PGBox", command=openFile).place(relx=.76, rely=.9)
 
     get_time()
