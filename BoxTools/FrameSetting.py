@@ -48,6 +48,8 @@ def save():
         "ThirdPackageOutputFile": TDpath.get(),
         "mail": mail.get(),
         "mailCode": mailCode.get(),
+        "city": city.get(),
+        "openweatherAPI": opwAPI.get(),
     }
     with open(".\\setting\\Config.txt", "w", encoding="utf-8") as file:
         json.dump(SettingInfor, file, ensure_ascii=False, indent=4)

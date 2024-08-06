@@ -91,4 +91,4 @@ def wifiFrame(frame):
                 time.sleep(2)
 
     # 想要关闭正能量弹窗，请注释掉下面这行代码
-    threading.Thread(target=showLabel).start()
+    # threading.Thread(target=showLabel).start()

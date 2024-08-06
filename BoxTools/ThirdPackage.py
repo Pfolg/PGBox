@@ -118,7 +118,7 @@ def ThirdPackage(frame):
     b5 = ttk.Button(frame, text="升级包", width=16, command=lambda: process(7))
     b6 = ttk.Button(frame, text="自动升级包", width=16, command=lambda: process(8))
 
-    def forgetAll():
+    def package3_forgetAll():
         for bt in [l1, e1, b1, b2, b3, c1, b4, b5, b6]:
             bt.place_forget()
 
@@ -126,34 +126,34 @@ def ThirdPackage(frame):
         global value
         value = x
         if value == 1 or value == 2:
-            forgetAll()
+            package3_forgetAll()
             l1.place(relx=.22, rely=.1)
             e1.place(relx=.22, rely=.2)
             b1.place(relx=.4, rely=.2)
         elif value == 3:
-            forgetAll()
+            package3_forgetAll()
             c1.place(relx=.22, rely=.3)
             b3.place(relx=.42, rely=.3)
         elif value == 4:
-            forgetAll()
+            package3_forgetAll()
             b2.place(relx=.22, rely=.4)
         elif value == 5:
-            forgetAll()
+            package3_forgetAll()
             l1.place(relx=.22, rely=.1)
             e1.place(relx=.22, rely=.2)
             b1.place(relx=.4, rely=.2)
             c1.place(relx=.22, rely=.3)
         elif value == 6:
-            forgetAll()
+            package3_forgetAll()
             b4.place(relx=.22, rely=.6)
         elif value == 7:
-            forgetAll()
+            package3_forgetAll()
             b5.place(relx=.22, rely=.7)
         elif value == 8:
-            forgetAll()
+            package3_forgetAll()
             b6.place(relx=.22, rely=.8)
         else:
-            forgetAll()
+            package3_forgetAll()
 
     msg = ("注意事项:\n"
            "0、没有Python解释器的请勿使用!\n"

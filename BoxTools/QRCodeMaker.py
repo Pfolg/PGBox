@@ -9,7 +9,7 @@ from PIL import Image
 from tkinter import filedialog
 
 
-def QRCodeMaker(window):
+def QRCodeMaker(frame):
     # 生成二维码
     def main_pro(txt, l2, l1, gl):
         try:
@@ -61,7 +61,7 @@ def QRCodeMaker(window):
         main_pro(a, b, c, d)
 
     def part0():
-        main_label = ttk.Label(window, text='QR-Code Maker',
+        main_label = ttk.Label(frame, text='QR-Code Maker',
                                font=(r'C:\Windows\Fonts\msyh.ttc', 20),
                                compound='center')
         main_label.place(relx=0.5, rely=0.05, anchor='center')
@@ -76,14 +76,14 @@ def QRCodeMaker(window):
 
     part0()
     # 标签
-    label = ttk.Label(window,
+    label = ttk.Label(frame,
                       text='输入内容',
                       font=(r'C:\Windows\Fonts\msyh.ttc', 15),
                       compound='center'
                       )
     # 输入框
     url = tk.StringVar()
-    input_ing = ttk.Entry(window, width=30, textvariable=url)
+    input_ing = ttk.Entry(frame, width=30, textvariable=url)
     input_ing.delete(0, 0)
     # input_ing.insert(0, "默认文本...")
     label.place(relx=0.15, rely=0.2)
@@ -91,11 +91,11 @@ def QRCodeMaker(window):
 
     # 背景颜色
     choose_color1 = tk.StringVar()
-    cc1 = ttk.Entry(window, width=30, textvariable=choose_color1)
+    cc1 = ttk.Entry(frame, width=30, textvariable=choose_color1)
     cc1.delete(0, 'end')
     cc1.insert(0, '#FFFFFF')
 
-    label1 = ttk.Label(window,
+    label1 = ttk.Label(frame,
                        text='背景颜色',
                        font=(r'C:\Windows\Fonts\msyh.ttc', 15),
                        compound='center')
@@ -104,11 +104,11 @@ def QRCodeMaker(window):
 
     # 前景颜色
     choose_color2 = tk.StringVar()
-    cc2 = ttk.Entry(window, width=30, textvariable=choose_color2)
+    cc2 = ttk.Entry(frame, width=30, textvariable=choose_color2)
     cc2.delete(0, 'end')
     cc2.insert(0, '#000000')
 
-    label2 = ttk.Label(window,
+    label2 = ttk.Label(frame,
                        text='前景颜色',
                        font=(r'C:\Windows\Fonts\msyh.ttc', 15),
                        compound='center')
@@ -116,18 +116,18 @@ def QRCodeMaker(window):
     cc2.place(relx=0.35, rely=0.4)
 
     # 获取中部图片
-    label3 = ttk.Label(window,
+    label3 = ttk.Label(frame,
                        text='LOGO',
                        font=(r'C:\Windows\Fonts\msyh.ttc', 15),
                        compound='center')
     get_logo = tk.StringVar()
-    tl = ttk.Entry(window, width=30, textvariable=get_logo)
+    tl = ttk.Entry(frame, width=30, textvariable=get_logo)
     # tl.delete(0, 'end')
     # tl.insert(0, '*.png')
     label3.place(relx=0.15, rely=0.5)
     tl.place(relx=0.35, rely=0.5)
 
-    func = ttk.Button(window,
+    func = ttk.Button(frame,
                       text='生成',
                       width=7,
                       compound='center',
@@ -135,7 +135,7 @@ def QRCodeMaker(window):
     # 把部件贴上去
     func.place(anchor='center', relx=0.5, rely=0.7)
 
-    insert = ttk.Button(window,
+    insert = ttk.Button(frame,
                         text='导入',
                         width=7,
                         compound='top',

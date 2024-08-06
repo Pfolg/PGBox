@@ -2,25 +2,14 @@
 # Environment    PyCharm
 # File_name   FrameWin |User    Pfolg
 # 2024/7/20   20:00
-import time
 from tkinter import ttk
 import os
 from tkinter import messagebox
 import threading
-import pyautogui
 
 
 def autoShutdown():
     os.system(".\\BoxTools\\autoShutdown.py")
-
-
-def openUrl(url):
-    with open(".\\run.bat", "w", encoding="utf-8") as f:
-        f.write(f"start {url}")
-    os.system(".\\run.bat")
-    os.remove(".\\run.bat")
-    time.sleep(2)
-    pyautogui.press("f11")
 
 
 def start3process():
@@ -33,6 +22,7 @@ lockInfo = ("没有弄懂这个程序怎么运行的请勿使用!\n"
             "BoxTools里有一个[WinLock.py]的文件，\n"
             "将它放到启动文件夹就可以实现掩耳盗铃的电脑锁了，\n"
             "所以极不推荐，\n"
+            "首先你得更改里面的哈希值，不然后果很严重，\n"
             "可以利用[密码生成]生成密码的sha256值。")
 
 btuComDict = {
@@ -55,18 +45,15 @@ btuComDict = {
 
     "电脑锁": lambda: messagebox.showinfo(title="提示信息", message=lockInfo),
     "定时关机": lambda: start3process(),
-    "变身黑客1": lambda: messagebox.showinfo(
-        title="你也是闲的", message="这是一个扫盘命令:\n"
-                                    "win+r\n"
-                                    "cmd\n"
-                                    "color a\n"
-                                    "dir/s"),
-    "变身黑客2": lambda: openUrl("http://geekprank.com/hacker"),
-    "关于天文": lambda: openUrl("https://stars.chromeexperiments.com/"),
+    "打开程序所在目录": lambda: os.system("start .\\"),
+    "文字转语音": lambda: os.system("start https://ttsmaker.cn/"),
+    "文件转换": lambda: os.system("start https://convertio.co/zh/"),
 
-    "bug-3": 3,
+    "Bug-3": 3,
 
-    "打开程序所在目录": lambda: os.system("start .\\")
+    "免费素材图片": lambda: os.system("start https://www.pexels.com/zh-cn/"),
+    "计时器": lambda: os.system("start .\\BoxTools\\TimerAPP.pyw")
+
 }
 
 

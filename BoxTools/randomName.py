@@ -1,5 +1,4 @@
 import json
-
 import pandas as pd
 import tkinter as tk
 from tkinter import ttk
@@ -7,7 +6,7 @@ from tkinter import messagebox
 from tkinter import filedialog
 import random
 
-information = ("您的名单最好为.xlsx格式;\n"
+randomName_information = ("您的名单最好为.xlsx格式;\n"
                "您的名单应位于文件的Sheet1内;\n"
                "名字只能位于“姓名”之下的单元格;\n"
                "本程序基于Python-tkinter&pandas&random实现。")
@@ -77,7 +76,7 @@ def randomName(frame):
     ttk.Button(frame, text="选择", command=lambda: find_files(file)).place(relx=.6, rely=.398)
     ttk.Button(frame, text="开始", command=lambda: window(showName())).place(relx=.43, rely=.6)
 
-    ttk.Button(frame, text="帮助", command=lambda: messagebox.showinfo(title="帮助", message=information),
+    ttk.Button(frame, text="帮助", command=lambda: messagebox.showinfo(title="帮助", message=randomName_information),
                width=8).place(relx=.8, rely=.9)
 
     ttk.Label(frame, text="你不能怪作者，作者也是被**毒害了的人，肯定要回馈一下**啊(手动狗头)",

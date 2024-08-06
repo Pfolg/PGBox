@@ -8,18 +8,18 @@ from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
 import random
 
-strDict = {"纯数字": "1234567890",  # 纯数字
-           "数字+小写字母": "1234567890abcdefghijklmnopqrstuvwxyz",  # 数字+小写字母
-           "数字+大写字母": "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",  # 数字+大写字母
-           "纯小写字母": "abcdefghijklmnopqrstuvwxyz",  # 纯小写字母
-           "纯大写字母": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",  # 纯大写字母
-           "数字+小写字母+符号": "1234567890abcdefghijklmnopqrstuvwxyz!@#$%&*?.",  # 数字+小写字母+符号
-           "数字+大写字母+符号": "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*?.",  # 数字+大写字母+符号
-           "数字+字母": "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",  # 数字+字母
-           "终极奥义": "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*?."  # 终极奥义
-           }
+PWD_Dict = {"纯数字": "1234567890",  # 纯数字
+            "数字+小写字母": "1234567890abcdefghijklmnopqrstuvwxyz",  # 数字+小写字母
+            "数字+大写字母": "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ",  # 数字+大写字母
+            "纯小写字母": "abcdefghijklmnopqrstuvwxyz",  # 纯小写字母
+            "纯大写字母": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",  # 纯大写字母
+            "数字+小写字母+符号": "1234567890abcdefghijklmnopqrstuvwxyz!@#$%&*?.",  # 数字+小写字母+符号
+            "数字+大写字母+符号": "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*?.",  # 数字+大写字母+符号
+            "数字+字母": "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",  # 数字+字母
+            "终极奥义": "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*?."  # 终极奥义
+            }
 
-listKeys = list(strDict.keys())
+pwdListKeys = list(PWD_Dict.keys())
 
 
 def ConSha256(original_string):
@@ -51,7 +51,7 @@ def ConMD5(x):
 
 def makeKey(key, num):
     if key and num.isdigit():
-        x = strDict.get(key)
+        x = PWD_Dict.get(key)
         y = int(num)
         if x and y:
             pwd = ""
@@ -82,7 +82,7 @@ def keyFrame(frame):
     # 一般
     choice = tk.StringVar()
     ttk.Label(frame, text="生成一般密码").place(relx=.02, rely=.4)
-    ttk.Combobox(frame, values=listKeys, width=20, textvariable=choice).place(relx=.2, rely=.4)
+    ttk.Combobox(frame, values=pwdListKeys, width=20, textvariable=choice).place(relx=.2, rely=.4)
     ttk.Label(frame, text="密码长度", width=8).place(relx=.5, rely=.4)
     pwdNum = tk.StringVar()
     ttk.Entry(frame, width=8, textvariable=pwdNum).place(relx=.62, rely=.4)
@@ -99,4 +99,5 @@ def keyFrame(frame):
         scText.config(state="normal")
         scText.delete("1.0", "end")
         scText.config(state="disabled")
+
     ttk.Button(frame, text="Clear", width=8, command=deleteContent).place(relx=.58, rely=.7)
