@@ -18,7 +18,8 @@
 咳咳（战略性清嗓），平时喜欢写写小程序练练手，然后在GitHub上看到了芙芙工具箱，在此之前，我有想把自己写的程序整合起来的想法，无奈自己太菜，然后就拖着，直到某日终于下定决心。
 
 # 功能
-![](https://github.com/user-attachments/assets/98abece5-9981-4e4c-b047-3344911f83fa)
+![](https://github.com/user-attachments/assets/9b765827-d7b4-4e5d-8e1a-a305f58eb672)
+
 - 批量创建文件/文件夹
 - 音乐播放器（可有可无）
 - 二维码生成器
