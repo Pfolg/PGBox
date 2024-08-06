@@ -8,7 +8,7 @@ import time
 import frame0
 
 
-def drawName(canva, info="ToolsBox"):
+def drawName(canva, info="PGBox"):
     theScreen = turtle.TurtleScreen(canva)
     path = turtle.RawTurtle(theScreen)
     path.hideturtle()
