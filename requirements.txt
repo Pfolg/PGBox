@@ -1,6 +1,5 @@
 pywin32
 requests
-pyautogui
 blind_watermark
 pyperclip
 pyautogui

@@ -12,7 +12,7 @@ from tkinter import ttk
 import win32com.client
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
     singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, authorInfor, \
-    readLICENSE, makeKey, wifiInfor, frameTD, openWeather
+    readLICENSE, makeKey, wifiInfor, frameEntertainment, openWeather
 
 
 def openFile(path=".\\README.md"):
@@ -135,7 +135,7 @@ def basicFrame0(w, h, window):
 
         "Bug-3": 3,
 
-        "二刺猿": frameM,
+        "Entertainment": frameM,
 
     }
 
@@ -171,7 +171,7 @@ def basicFrame0(w, h, window):
     # WiFi
     wifiInfor.wifiFrame(frameWiFi)
     # 二刺猿
-    frameTD.winFunction(frameM)
+    frameEntertainment.EntertainmentFrame(frameM)
 
     # 5行7列
     i = 0
@@ -193,9 +193,9 @@ def basicFrame0(w, h, window):
     buttons(frameSetting, "设置", .9, .9, 8)
 
     # 其他功能(私有功能)
-    frameOtherFunctions = ttk.Frame(window)
-    otherFunction.otherFunction(frameOtherFunctions)
-    buttons(frameOtherFunctions, "其他功能", .82, .8)
+    # frameOtherFunctions = ttk.Frame(window)
+    # otherFunction.otherFunction(frameOtherFunctions)
+    # buttons(frameOtherFunctions, "其他功能", .82, .8)
 
     frameAuthor = ttk.Frame(window)
     authorInfor.authorInfor(frameAuthor)
