@@ -2,13 +2,15 @@
 # Environment    PyCharm
 # File_name   FBWM |User    Pfolg
 # 2024/7/28   3:23
+import os
 import time
 from blind_watermark import WaterMark
-from tkinter import ttk
+from tkinter import ttk, filedialog, messagebox
 from tkinter.scrolledtext import ScrolledText
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 
 
 #  仅供admin使用
@@ -121,6 +123,10 @@ def getFileFrame(frame):
                                                                                  "\n添加盲水印的图片大小会变大，清晰度会下降"
                                                                          )
     ).place(relx=.9, rely=.8)
+
+    ttk.Button(
+        frame, text="普通水印", command=lambda: os.system("start .\\BoxTools\\visibleWaterMark.pyw")
+    ).place(relx=.02, rely=.3)
 
 
 if __name__ == '__main__':

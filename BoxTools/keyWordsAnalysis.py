@@ -36,7 +36,7 @@ def analysis(file_name):
         # 进一步分析
         dic1 = {}
         for i in list2:
-            dic1[i] = 0
+            dic1[i] = 1
 
         for i in list1:
             if i in dic1:

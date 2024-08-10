@@ -2,7 +2,7 @@
 # Environment    PyCharm
 # File_name   frameTimer |User    Pfolg
 # 2024/8/3   12:29
-# 这个程序就不合并在PGTools上了，单拿出来也能用
+# 这个程序就不合并在BoxTools上了，单拿出来也能用
 
 import time
 from tkinter import ttk

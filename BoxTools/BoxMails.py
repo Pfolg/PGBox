@@ -17,6 +17,7 @@ from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
 from tkinter.scrolledtext import ScrolledText
+from plyer import notification
 
 
 def readMailInfo():
@@ -69,7 +70,12 @@ def sendMail(inf):
         # 发送邮件，传递参数1：发件人邮箱地址，参数2：收件人邮箱地址，参数3：把邮件内容格式改为str
         stp.sendmail(mail_sender, mail_receivers, mm.as_string())
         print("邮件发送成功")
-        messagebox.showinfo(title="提示信息", message="邮件发送成功!")
+        # messagebox.showinfo(title="提示信息", message="邮件发送成功!")
+        notification.notify(
+            title='提示信息',
+            message="邮件发送成功！",
+            timeout=10,  # 通知显示时间，单位为秒
+        )
         # 关闭SMTP对象
         stp.quit()
 
