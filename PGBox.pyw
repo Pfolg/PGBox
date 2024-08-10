@@ -13,8 +13,8 @@ def drawName(canva, info="PGBox"):
     path = turtle.RawTurtle(theScreen)
     path.hideturtle()
     path.penup()
-    path.fd(-300)
-    path.pencolor("#f0d2dd")
+    path.fd(-200)
+    path.pencolor("#000000")
     for i in info:
         path.write(i, font=('微软雅黑', 40, 'bold'))
         path.fd(80)

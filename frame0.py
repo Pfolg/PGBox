@@ -11,8 +11,10 @@ import time
 from tkinter import ttk
 import win32com.client
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
-    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, authorInfor, \
-    readLICENSE, makeKey, wifiInfor, frameEntertainment, openWeather
+    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, makeKey, \
+    wifiInfor, frameEntertainment, openWeather, aboutPG
+
+globalColor = "#fce1ff"
 
 
 def openFile(path=".\\README.md"):
@@ -41,7 +43,7 @@ def beautifulSentence(frame, w):
         except BaseException:
             sentence = ""
         try:
-            ttk.Label(frame, text="    " + sentence, font=("微软雅黑", 10), background="#f0d2dd",
+            ttk.Label(frame, text="    " + sentence, font=("微软雅黑", 10), background=globalColor,
                       compound="center", width=w, foreground="#706b67"
                       ).place(relx=0, rely=.02, height=70)
         except RuntimeError:
@@ -54,7 +56,7 @@ def basicFrame0(w, h, window):
     # 初始窗口
     frame0 = ttk.Frame(window)
     frame0.place(relx=0, rely=0, width=w, height=h)
-    ttk.Label(frame0, width=w, background="#f0d2dd", compound="center").place(relx=0, rely=.02, height=70)
+    ttk.Label(frame0, width=w, background=globalColor, compound="center").place(relx=0, rely=.02, height=70)
     threading.Thread(target=lambda: beautifulSentence(frame0, w)).start()
 
     # 显示天气
@@ -197,14 +199,18 @@ def basicFrame0(w, h, window):
     # otherFunction.otherFunction(frameOtherFunctions)
     # buttons(frameOtherFunctions, "其他功能", .82, .8)
 
-    frameAuthor = ttk.Frame(window)
-    authorInfor.authorInfor(frameAuthor)
-    buttons(frameAuthor, "关于作者", .65, .9, 8)
+    # frameAuthor = ttk.Frame(window)
+    # authorInfor.authorInfor(frameAuthor)
+    # buttons(frameAuthor, "关于作者", .65, .9, 8)
+    #
+    # frameLICENSE = ttk.Frame(window)
+    # readLICENSE.readLICENSE(frameLICENSE)
+    # buttons(frameLICENSE, "LICENSE", .54, .9, 8)
+    #
+    # ttk.Button(frame0, text="关于PGBox", command=openFile).place(relx=.76, rely=.9)
 
-    frameLICENSE = ttk.Frame(window)
-    readLICENSE.readLICENSE(frameLICENSE)
-    buttons(frameLICENSE, "LICENSE", .54, .9, 8)
-
-    ttk.Button(frame0, text="关于PGBox", command=openFile).place(relx=.76, rely=.9)
+    frameAbout = ttk.Frame(window)
+    aboutPG.PGAbout(frameAbout)
+    buttons(frameAbout, "关于", .8, .9, 8)
 
     get_time()

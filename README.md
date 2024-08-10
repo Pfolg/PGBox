@@ -19,8 +19,6 @@
 
 # 功能
 ![](https://github.com/user-attachments/assets/cd80796b-8c98-4750-abcf-1e2e5cf34aac)
-
-
 - 批量创建文件/文件夹
 - 音乐播放器（可有可无）
 - 二维码生成器
