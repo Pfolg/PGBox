@@ -5,7 +5,6 @@
 import os
 import random
 import requests
-import sys
 import threading
 import time
 from tkinter import ttk
@@ -37,9 +36,14 @@ def beautifulSentence(frame, w):
                 newList = [s.rstrip('\r\t\n') for s in listSentence]
                 sentence = newList[random.randint(0, len(newList) - 1)]
             else:
+                # url = "https://v1.hitokoto.cn/"
+                # content = requests.get(url)
+                # sentence = eval(content.text).get("hitokoto")
+
                 url = "https://tenapi.cn/v2/yiyan"
                 content = requests.get(url)
                 sentence = content.text
+                # print(content.text)
         except BaseException:
             sentence = ""
         try:
@@ -47,7 +51,7 @@ def beautifulSentence(frame, w):
                       compound="center", width=w, foreground="#706b67"
                       ).place(relx=0, rely=.02, height=70)
         except RuntimeError:
-            sys.exit()
+            break
         # 30秒刷新一次，多了会被网站列入黑名单
         time.sleep(30)
 
@@ -115,14 +119,14 @@ def basicFrame0(w, h, window):
     dictFrame = {
         "批量创建": frameMakeFiles,
         "音乐播放器": frameMusicPlayer,
-        "二维码生成器": frameQR,
+        "二维码": frameQR,
         "随机点名": frameRandomName,
         "Python第三方库工具": framePythonPackage,
 
         "Bug-1": 1,
 
         "PDF关键词分析": frameKeyWord,
-        "电脑功能": frameWin,
+        "电脑功能(Win11)": frameWin,
         "自动点击": frameClick,
         "邮件": frameMail,
         "中国经纬度": frameLonLat,

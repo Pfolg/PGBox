@@ -1,0 +1,1 @@
+start Setting.pyw

@@ -4,9 +4,11 @@ blind_watermark
 pyperclip
 pyautogui
 pdfplumber
+pynput
 jieba
 mutagen
 pygame
 qrcode
 Pillow
 pandas
+pyzbar
