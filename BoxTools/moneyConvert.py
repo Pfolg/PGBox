@@ -35,13 +35,6 @@ moneyDict = {'阿联酋迪拉姆': 'AED', '阿根廷比索': 'ARS', '澳元': 'A
 moneyList = list(moneyDict.keys())
 
 
-def openBrowse():
-    with open(".\\run.bat", "w", encoding="utf-8") as file:
-        file.write(f"start {moneyUrl}")
-    os.system(".\\run.bat")
-    os.remove(".\\run.bat")
-
-
 def conMon(source, target, m):
     if source and target and m:
         url = f"https://themoneyconverter.com/zh-CN/{moneyDict.get(source)}/{moneyDict.get(target)}?amount=1"
@@ -65,7 +58,10 @@ def moneyConvert(frame):
                "\n项目灵感来源：https://gitee.com/huacaoye/the-money-converter"
                "\n由于正则表达式的原因，数据有可能会出错。")
     box["state"] = "disabled"
-    ttk.Button(frame, text="召唤真正的货币转换工具", command=openBrowse).place(relx=.4, rely=.9)
+
+    ttk.Button(
+        frame, text="web 打开货币转换工具", command=lambda: os.system(f"start {moneyUrl}")
+    ).place(relx=.42, rely=.9)
 
     ttk.Label(frame, text="From\t\t\t\t\tTo").place(relx=.2, rely=.4)
     sbox = ttk.Combobox(frame, values=moneyList, width=12)

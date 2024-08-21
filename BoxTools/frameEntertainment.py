@@ -39,13 +39,20 @@ btuComDict = {
 
     "Bug-2": 2,
 
-    "编程语言流行指数": lambda: os.system("start https://www.tiobe.com/tiobe-index/")
+    "编程语言流行指数": lambda: os.system("start https://www.tiobe.com/tiobe-index/"),
+    "kyukurarin": lambda: os.system("start https://bymnet1845.web.fc2.com/kyukurarin/"),
+    "图片赛博做旧": lambda: os.system("start https://magiconch.com/patina/"),
+    "伪装系统更新": lambda: openUrl("https://hua.liukairui.me/config"),
+    "FakeUpdate": lambda: os.system("start https://fakeupdate.net/"),
+
+    "Bug-3": 3,
+
 
 }
 
 
 def EntertainmentFrame(frame):
-    ttk.Label(frame, text="Entertainment\t作者分享的一些网站，点一下就能打开").place(relx=.02, rely=.02)
+    ttk.Label(frame, text="Entertainment\t作者分享的一些网站，点一下就能打开 -> web").place(relx=.02, rely=.02)
     i = 0
     j = 1
     for key in btuComDict:

@@ -39,7 +39,7 @@ def getInfor():
 
 
 def wifiFrame(frame):
-    ttk.Label(frame, text="获取WiFi信息").place(relx=.02, rely=.02)
+    ttk.Label(frame, text="获取当前WiFi信息").place(relx=.02, rely=.02)
     ttk.Button(
         frame, text="暴力破解", width=8, command=lambda: messagebox.showinfo(title="提示信息", message="省省吧，这玩意费时费力，\n"
                                                                                                        "作者的电脑差点没了，\n"

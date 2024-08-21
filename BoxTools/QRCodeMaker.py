@@ -5,8 +5,11 @@ import tkinter as tk
 import qrcode as cd
 import tkinter.messagebox as tkm
 import tkinter.ttk as ttk
+from tkinter.scrolledtext import ScrolledText
 from PIL import Image
 from tkinter import filedialog
+from pyzbar.pyzbar import decode
+import cv2
 
 
 def QRCodeMaker(frame):
@@ -49,10 +52,10 @@ def QRCodeMaker(frame):
             x, y = int((code_size_w - logo_w) / 2), int((code_size_h - logo_h) / 2)
             code_img.paste(icon, (x, y))
         time.sleep(2)
-        # code_img.show()
-        tkm.showinfo(message='二维码已生成，请在程序所在目录查找\n\"code.png\"', title='提示信息')
-        with open('.\\code.png', 'wb') as file:
-            code_img.save(file)
+        code_img.show()
+        # tkm.showinfo(message='二维码已生成，请在程序所在目录查找\n\"code.png\"', title='提示信息')
+        # with open('.\\code.png', 'wb') as file:
+        #     code_img.save(file)
         print('Done')
 
     def part1():
@@ -61,17 +64,16 @@ def QRCodeMaker(frame):
         main_pro(a, b, c, d)
 
     def part0():
-        main_label = ttk.Label(frame, text='QR-Code Maker',
-                               font=(r'C:\Windows\Fonts\msyh.ttc', 20),
+        main_label = ttk.Label(frame, text='二维码生成',
+                               font=(r'C:\Windows\Fonts\msyh.ttc', 20), background="#b3baba",
                                compound='center')
         main_label.place(relx=0.5, rely=0.05, anchor='center')
 
-    def find_picture():
+    def find_picture(x):
         win = tk.Tk()
         win.withdraw()
         file_path = filedialog.askopenfilename()
-        tl.delete(0, 'end')
-        tl.insert(0, file_path)
+        x.set(file_path)
         win.destroy()
 
     part0()
@@ -133,11 +135,52 @@ def QRCodeMaker(frame):
                       compound='center',
                       command=part1)
     # 把部件贴上去
-    func.place(anchor='center', relx=0.5, rely=0.7)
+    func.place(relx=0.75, rely=0.5)
 
     insert = ttk.Button(frame,
                         text='导入',
                         width=7,
                         compound='top',
-                        command=find_picture)
+                        command=lambda: find_picture(get_logo))
     insert.place(relx=0.65, rely=0.5)
+
+    # 二维码识别
+
+    sBox = ScrolledText(frame, width=30, height=5, state="disabled")
+    sBox.place(relx=.4, rely=.65)
+
+    def recognizeCode(x):
+        sBox.config(state="normal")
+        if x:
+            try:
+                # 读取图像文件
+                image = cv2.imread(x)
+
+                # 使用pyzbar库识别图像中的二维码
+                decoded_objects = decode(image)
+
+                # 打印识别到的数据
+                for obj in decoded_objects:
+                    print('Type:', obj.type)
+                    print('Data:', obj.data.decode('utf-8'))
+                    sBox.insert(tk.END, obj.data.decode('utf-8') + "\n")
+            except BaseException:
+                pass
+        sBox.config(state="disabled")
+
+    ttk.Label(
+        frame, text="识别二维码", font=(r'C:\Windows\Fonts\msyh.ttc', 15),
+        background="#b3baba"
+    ).place(relx=.1, rely=.6)
+
+    codePath = tk.StringVar()
+
+    ttk.Entry(frame, textvariable=codePath, width=16).place(relx=.1, rely=.7)
+    ttk.Button(frame, text="选择", width=8, command=lambda: find_picture(codePath)).place(relx=.26, rely=.698)
+    ttk.Button(
+        frame, text="识别", width=8, command=lambda: recognizeCode(codePath.get())
+    ).place(relx=.1, rely=.8)
+
+    ttk.Button(
+        frame, width=5, text="Clear", command=lambda: sBox.delete(1.0, "end")
+    ).place(relx=.63, rely=.82)

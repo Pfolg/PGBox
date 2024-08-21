@@ -45,14 +45,16 @@ btuComDict = {
 
     "电脑锁": lambda: messagebox.showinfo(title="提示信息", message=lockInfo),
     "定时关机": lambda: start3process(),
-    "打开程序所在目录": lambda: os.system("start .\\"),
-    "文字转语音": lambda: os.system("start https://ttsmaker.cn/"),
-    "文件转换": lambda: os.system("start https://convertio.co/zh/"),
+    "py 打开程序所在目录": lambda: os.system("start .\\"),
+    "web 文字转语音": lambda: os.system("start https://ttsmaker.cn/"),
+    "web 文件转换": lambda: os.system("start https://convertio.co/zh/"),
 
     "Bug-3": 3,
 
-    "免费素材图片": lambda: os.system("start https://www.pexels.com/zh-cn/"),
-    "计时器": lambda: os.system("start .\\BoxTools\\TimerAPP.pyw")
+    "web 免费素材图片": lambda: os.system("start https://www.pexels.com/zh-cn/"),
+    "py 计时器": lambda: os.system("start .\\BoxTools\\TimerAPP.pyw"),
+    "py 键盘记录": lambda: os.system("start .\\BoxTools\\recordKeyboard.pyw"),
+    "py 轰QW-2000": lambda: os.system("start .\\BoxTools\\autoSend.py"),
 
 }
 

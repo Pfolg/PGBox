@@ -44,11 +44,17 @@ def singleDouble(frame):
     ttk.Button(frame, text="启动", command=myClickRun).place(relx=.12, rely=.2)
     # ttk.Label(frame, text="请输入点击间隔").place(relx=.02, rely=.1)
     # ttk.Entry(frame, width=8, textvariable=delta).place(relx=.22, rely=.1)
-    ttk.Button(frame, width=8, text="帮助",
-               command=lambda: messagebox.showinfo(title="提示信息",
-                                                   message="此程序有一个极大的bug没修，暂无法使用!\n"
-                                                           "基于pyautogui实现，鼠标移至左上角停止。\n"
-                                                           "由于石粒有限，主程序关闭后子程序仍然会运行，\n"
-                                                           "使用时请注意。"
-                                                   )
-               ).place(relx=.9, rely=.8)
+    ttk.Button(
+        frame, width=8, text="帮助",
+        command=lambda: messagebox.showinfo(title="提示信息",
+                                            message="此程序有一个极大的bug没修，暂无法使用!\n"
+                                                    "基于pyautogui实现，鼠标移至左上角停止。\n"
+                                                    "由于石粒有限，主程序关闭后子程序仍然会运行，\n"
+                                                    "使用时请注意。\n"
+                                                    "2.0也有相同Bug"
+                                            )
+    ).place(relx=.9, rely=.8)
+
+    ttk.Button(
+        frame, text="连点器2.0", width=8, command=lambda: os.system("start .\\BoxTools\\ClickDS.pyw")
+    ).place(relx=.5, rely=.1)
