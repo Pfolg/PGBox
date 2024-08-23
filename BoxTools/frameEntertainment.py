@@ -47,6 +47,8 @@ btuComDict = {
 
     "Bug-3": 3,
 
+    "幻影坦克": lambda: os.system("start https://pro-ivan.com/game/MirageTank/"),
+    "光棱坦克": lambda: os.system("start https://uyanide.github.io/Mirage_Decode/"),
 
 }
 

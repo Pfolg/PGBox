@@ -45,7 +45,7 @@ btuComDict = {
 
     "电脑锁": lambda: messagebox.showinfo(title="提示信息", message=lockInfo),
     "定时关机": lambda: start3process(),
-    "py 打开程序所在目录": lambda: os.system("start .\\"),
+    "py 快捷方式脚本": lambda: os.system("start .\\BoxTools\\shortcutMaker.pyw"),
     "web 文字转语音": lambda: os.system("start https://ttsmaker.cn/"),
     "web 文件转换": lambda: os.system("start https://convertio.co/zh/"),
 

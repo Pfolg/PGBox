@@ -5,11 +5,49 @@
 import os
 import threading
 import time
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from tkinter.scrolledtext import ScrolledText
 import tkinter as tk
+import requests
 
 flag = True
+nowTag = "v1.0.10"
+
+
+def checkTag():
+    # GitHub API的URL
+    url = f'https://api.github.com/repos/Pfolg/PGBox/releases'
+
+    # 发送GET请求
+    response = requests.get(url, verify=False)  # 不进行身份验证，可能会有风险
+
+    # 检查请求是否成功
+    if response.status_code == 200:
+        # 解析JSON数据
+        release = response.json()[0]
+        # 打印每个发布的信息
+        # print(f"Release Tag: {release['tag_name']}")
+        # print(f"Release Name: {release['name']}")
+        # print(f"Release Date: {release['published_at']}")
+        # print(f"Release Description: {release['body']}")
+        if nowTag == release['tag_name']:
+            infTxt = "当前是最新版！\n"
+
+        else:
+            infTxt = f"新版本发布！\t{nowTag}>>>{release['tag_name']}\n"
+
+        messagebox.showinfo(
+            title="PGBox", message=
+            infTxt +
+            f"Release Tag: {release['tag_name']}\n"
+            f"Release Name: {release['name']}\n"
+            f"Release Date: {release['published_at']}\n"
+            f"Release Description: \n{release['body']}"
+        )
+
+    else:
+        # print("Failed to retrieve data")
+        messagebox.showerror(title="PGBox", message="Failed to retrieve data.\n获取失败！")
 
 
 def openFile(path=".\\README.md"):
@@ -19,7 +57,6 @@ def openFile(path=".\\README.md"):
 
 
 def PGAbout(frame):
-
     ttk.Label(frame, text="关于PGBox", font=("微软雅黑", 16)).place(relx=.02, rely=.02)
 
     l1 = ttk.Label(frame, text=("By continuing to use this software, you agree to this LCENSE\n"
@@ -106,3 +143,9 @@ def PGAbout(frame):
     ttk.Button(
         frame, text="官方网站", command=lambda: os.system("start https://github.com/Pfolg/PGBox"), width=8
     ).place(relx=.4, rely=.2)
+
+    ttk.Button(
+        frame, text="检查更新", command=checkTag, width=8
+    ).place(relx=.5, rely=.2)
+
+    ttk.Button(frame, text="打开程序所在目录", command=lambda: os.system("start .\\")).place(relx=.6, rely=.2)
