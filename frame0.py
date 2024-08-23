@@ -13,7 +13,7 @@ from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdP
     singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, makeKey, \
     wifiInfor, frameEntertainment, openWeather, aboutPG
 
-globalColor = "#fce1ff"
+globalColor = "#c7dddd"
 
 
 def openFile(path=".\\README.md"):
