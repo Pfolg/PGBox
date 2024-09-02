@@ -7,6 +7,8 @@ import turtle
 import time
 import frame0
 
+nowTag = "v1.0.11"
+
 
 def drawName(canva, info="PGBox"):
     theScreen = turtle.TurtleScreen(canva)
@@ -22,7 +24,7 @@ def drawName(canva, info="PGBox"):
 
 
 window = tk.Tk()
-window.title("PGBox")
+window.title(f"PGBox {nowTag}")
 screen_w, screen_h = window.winfo_screenwidth(), window.winfo_screenheight()
 w, h = int(screen_w / 2), int(screen_h / 2)
 window.geometry(f'{w}x{h}+{int(screen_w / 4)}+{int(screen_h / 4)}')
