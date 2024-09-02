@@ -1,6 +1,6 @@
 import os
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 import tkinter.ttk as ttk
 
 
@@ -64,6 +64,14 @@ def create():
         tk.messagebox.showerror(title='FileExistsError', message='文件已存在!')
 
 
+def findDirectory(x):
+    win = tk.Tk()
+    win.withdraw()
+    Directory_path = filedialog.askdirectory()
+    x.set(Directory_path)
+    win.destroy()
+
+
 def makeFilesPhot(window):
     # 窗口属性
     color = None
@@ -73,8 +81,11 @@ def makeFilesPhot(window):
     # 请输入工作路径(您可以在此输入多级目录，程序会在最终子目录工作:
     v_path = tk.StringVar()
     ttk.Label(window, text='*工作路径:', font=('微软雅黑', 16),
-             compound='center').place(relx=.45, rely=0)  #place(relx=0.45, rely=0)
-    ttk.Entry(window, width=36, textvariable=v_path).place(relx=.35, rely=.1)
+              compound='center').place(relx=.45, rely=0)  #place(relx=0.45, rely=0)
+    ttk.Entry(window, width=36, textvariable=v_path).place(relx=.3, rely=.1)
+    ttk.Button(
+        window, width=8, text="选择", command=lambda: findDirectory(v_path)
+    ).place(relx=.7, rely=.095)
 
     v_formats, v_first_name, v_last_name, v_content, v_start, v_num \
         = tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar()
@@ -83,9 +94,9 @@ def makeFilesPhot(window):
     v_formats.set(0)
     ttk.Label(window, text='*文件开头:', font=('Segoe UI', 10), compound='center').place(relx=0.2, rely=0.2)
     ttk.Radiobutton(window, text='数字开头', variable=v_formats, value=0).place(relx=0.4,
-                                                                                                       rely=0.2)
+                                                                                rely=0.2)
     ttk.Radiobutton(window, text='文字开头', variable=v_formats, value=1).place(relx=0.6,
-                                                                                                       rely=0.2)
+                                                                                rely=0.2)
     # 文件文字格式
     ttk.Label(window, text='文件文字:', font=('Segoe UI', 10), compound='center').place(relx=0.2, rely=0.3)
     ttk.Entry(window, width=30, textvariable=v_first_name).place(relx=0.5, rely=0.3)

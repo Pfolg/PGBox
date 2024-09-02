@@ -10,8 +10,8 @@ from tkinter.scrolledtext import ScrolledText
 import tkinter as tk
 import requests
 
+nowTag = "v1.0.11"
 flag = True
-nowTag = "v1.0.10"
 
 
 def checkTag():
@@ -34,7 +34,7 @@ def checkTag():
             infTxt = "当前是最新版！\n"
 
         else:
-            infTxt = f"新版本发布！\t{nowTag}>>>{release['tag_name']}\n"
+            infTxt = f"当前不是最新版！\t{nowTag}>>>{release['tag_name']}\n"
 
         messagebox.showinfo(
             title="PGBox", message=
@@ -58,6 +58,9 @@ def openFile(path=".\\README.md"):
 
 def PGAbout(frame):
     ttk.Label(frame, text="关于PGBox", font=("微软雅黑", 16)).place(relx=.02, rely=.02)
+    ttk.Label(
+        frame, text=nowTag, font=("微软雅黑 bold", 16), foreground="#daa121"
+    ).place(relx=.82, rely=.02)
 
     l1 = ttk.Label(frame, text=("By continuing to use this software, you agree to this LCENSE\n"
                                 "继续使用本软件，即表示您同意本LCENSE"), font=("微软雅黑 bold", 12)

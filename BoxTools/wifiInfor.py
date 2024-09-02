@@ -39,24 +39,33 @@ def getInfor():
 
 
 def wifiFrame(frame):
-    ttk.Label(frame, text="获取当前WiFi信息").place(relx=.02, rely=.02)
+    ttk.Label(frame, text="获取WiFi信息").place(relx=.02, rely=.02)
     ttk.Button(
-        frame, text="暴力破解", width=8, command=lambda: messagebox.showinfo(title="提示信息", message="省省吧，这玩意费时费力，\n"
-                                                                                                       "作者的电脑差点没了，\n"
-                                                                                                       "你自己搞搞没问题，我搞了放在这可是要进局子的。\n"
-                                                                                                       "顺便说一句，我失败了的哦。")
+        frame, text="暴力破解", width=8, command=lambda: messagebox.showinfo(
+            title="提示信息", message=
+            "省省吧，这玩意费时费力，\n"
+            "作者的电脑差点没了，\n"
+            "你自己搞搞没问题，我搞了放在这可是要进局子的。\n"
+            "顺便说一句，我失败了的哦。")
     ).place(relx=.46, rely=.3)
 
     ttk.Button(
-        frame, text="获取WiFi信息", command=lambda: threading.Thread(target=getInfor).start()
+        frame, text="获取当前WiFi信息", command=lambda: threading.Thread(target=getInfor).start()
     ).place(relx=.445, rely=.4)
 
-    ttk.Button(frame,
-               command=lambda: messagebox.showinfo(title="提示信息", message="如何关闭这些弹窗：\n"
-                                                                             "在[BoxTools]文件夹里找到[wifiInfor.py]文件，\n"
-                                                                             "然后注释掉最后一行代码。"),
-               width=8, text="帮助",
-               ).place(relx=.8, rely=.9)
+    ttk.Button(
+        frame, text="获取其他WiFi信息", command=lambda: os.system("start .\\BoxTools\\questionWifi.py")
+    ).place(relx=.445, rely=.5)
+
+    ttk.Button(
+        frame,
+        command=lambda: messagebox.showinfo(
+            title="提示信息", message=
+            "如何关闭这些弹幕：\n"
+            "在[BoxTools]文件夹里找到[wifiInfor.py]文件，\n"
+            "然后注释掉最后一行代码。"),
+        width=8, text="帮助",)
+    # ).place(relx=.8, rely=.9)
 
     keyDict = {"富强": [.08, .3], "民主": [.08, .45], "文明": [.08, .6], "和谐": [.08, .75], "爱国": [.18, .15],
                "敬业": [.38, .15], "诚信": [.58, .15], "友善": [.78, .15], "自由": [.88, .3], "平等": [.88, .45],

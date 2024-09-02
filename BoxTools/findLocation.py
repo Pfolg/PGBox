@@ -19,8 +19,10 @@ def findLocation(loc: str):
 
         pos = cities.get(loc)
         if not pos:
-            messagebox.showinfo(title="提示信息", message="未查询到该地址的经纬度!\n"
-                                                          "请检查输入，或者[.\\resource\\CN.txt]不存在该值。")
+            messagebox.showinfo(
+                title="提示信息", message=
+                "未查询到该地址的经纬度!\n"
+                "请检查输入，或者[.\\resource\\CN.txt]不存在该值。")
             print("未查询到该地址的经纬度")
         else:
             inforLocation.config(state="normal")
@@ -39,15 +41,17 @@ def flFrame(frame):
     ttk.Entry(frame, textvariable=location, width=16).place(relx=.42, rely=.2)
     ttk.Button(
         frame, text="帮助", width=8,
-        command=lambda: messagebox.showinfo(title="提示信息", message="输入地名以查询地理信息，示例：\n"
-                                                                      "Shuangliu District\n"
-                                                                      "Xinjin County\n"
-                                                                      "Chengdu\n"
-                                                                      "Yan'an\n"
-                                                                      "结果示例:"
-                                                                      "CN\t100000\tBeijing\tBeijing\t22\tBeijing\t39.9075\t116.3972\t4\n"
-                                                                      "数据来源于:https://www.geonames.org/\n"
-                                                                      "数据获取日期:2024年7月26日")
+        command=lambda: messagebox.showinfo(
+            title="提示信息", message=
+            "输入地名以查询地理信息，示例：\n"
+            "Shuangliu District\n"
+            "Xinjin County\n"
+            "Chengdu\n"
+            "Yan'an\n"
+            "结果示例:"
+            "CN\t100000\tBeijing\tBeijing\t22\tBeijing\t39.9075\t116.3972\t4\n"
+            "数据来源于:https://www.geonames.org/\n"
+            "数据获取日期:2024年7月26日")
     ).place(relx=.9, rely=.8)
 
     ttk.Button(frame, text="查询", width=8, command=lambda: findLocation(location.get())).place(relx=.45, rely=.3)

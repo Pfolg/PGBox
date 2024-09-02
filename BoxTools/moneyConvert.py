@@ -78,5 +78,5 @@ def moneyConvert(frame):
     e1.place(relx=.6, rely=.5)
     # 中部符号按钮
     ttk.Button(
-        frame, text=">>>", command=lambda: conMon(sbox.get(), tbox.get(), num.get())
+        frame, text="Converter", command=lambda: conMon(sbox.get(), tbox.get(), num.get())
     ).place(relx=.44, rely=.5)

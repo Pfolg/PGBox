@@ -33,33 +33,34 @@ WindowStyle = {
 
 # 定义创建的函数
 def makeShortcut(pathName, apppath, icoPath, style, arguments, description, workingDirectory):
-    try:
-        # 创建WScript.Shell对象
-        shell = win32com.client.Dispatch("WScript.Shell")
+    if pathName and apppath:
+        try:
+            # 创建WScript.Shell对象
+            shell = win32com.client.Dispatch("WScript.Shell")
 
-        # 指定快捷方式保存的位置和名称
-        shortcut_path = pathName
+            # 指定快捷方式保存的位置和名称
+            shortcut_path = pathName
 
-        # 创建快捷方式
-        shortcut = shell.CreateShortcut(shortcut_path)
+            # 创建快捷方式
+            shortcut = shell.CreateShortcut(shortcut_path)
 
-        # 设置快捷方式的属性
-        shortcut.TargetPath = apppath  # 应用程序路径
-        shortcut.IconLocation = icoPath  # 图标路径
-        shortcut.WindowStyle = style  # 1 表示正常窗口，其他值根据需要设置
-        shortcut.Arguments = arguments  # 程序启动参数
-        shortcut.Description = description  # 快捷方式描述
-        shortcut.WorkingDirectory = workingDirectory  # 工作目录
+            # 设置快捷方式的属性
+            shortcut.TargetPath = apppath  # 应用程序路径
+            shortcut.IconLocation = icoPath  # 图标路径
+            shortcut.WindowStyle = style  # 1 表示正常窗口，其他值根据需要设置
+            shortcut.Arguments = arguments  # 程序启动参数
+            shortcut.Description = description  # 快捷方式描述
+            shortcut.WorkingDirectory = workingDirectory  # 工作目录
 
-        # 保存快捷方式
-        shortcut.Save()
-    except BaseException:
-        pass
+            # 保存快捷方式
+            shortcut.Save()
+        except BaseException:
+            pass
 
-    if os.path.exists(pathName):
-        messagebox.showinfo(title="快捷方式脚本", message="快捷方式创建成功！")
-    else:
-        messagebox.showerror(title="快捷方式脚本", message="快捷方式创建失败！")
+        if os.path.exists(pathName):
+            messagebox.showinfo(title="快捷方式脚本", message="快捷方式创建成功！")
+        else:
+            messagebox.showerror(title="快捷方式脚本", message="快捷方式创建失败！")
 
 
 def deleteShortcut(shortcut_path):
