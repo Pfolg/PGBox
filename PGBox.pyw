@@ -7,7 +7,7 @@ import turtle
 import time
 import frame0
 
-nowTag = "v1.0.11"
+nowTag = "v1.0.12"
 
 
 def drawName(canva, info="PGBox"):
@@ -42,3 +42,5 @@ canva.pack_forget()
 frame0.basicFrame0(w, h, window)
 
 window.mainloop()
+
+# print("程序运行结束!")

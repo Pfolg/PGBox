@@ -4,11 +4,14 @@
 # 2024/7/20   13:23
 import os
 import random
+import tkinter
 import requests
 import threading
 import time
 from tkinter import ttk
 import win32com.client
+import webbrowser
+import urllib.parse
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
     singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, makeKey, \
     wifiInfor, frameEntertainment, openWeather, aboutPG
@@ -56,10 +59,40 @@ def beautifulSentence(frame, w):
         time.sleep(30)
 
 
+def search_in_browser(query):
+    # 使用bing搜索指定的查询
+    search_url = "https://www.bing.com/search?q={}".format(urllib.parse.quote(query))
+
+    """
+    Google: https://www.google.com/search?q={}
+    Bing: https://www.bing.com/search?q={}
+    DuckDuckGo: https://duckduckgo.com/?q={}
+    Baidu: https://www.baidu.com/s?wd={}
+    """
+
+    # 打开默认浏览器并导航到搜索URL
+    webbrowser.open_new_tab(search_url)
+
+
+def on_enter(e):
+    search_in_browser(urlContent.get())
+
+
 def basicFrame0(w, h, window):
     # 初始窗口
     frame0 = ttk.Frame(window)
     frame0.place(relx=0, rely=0, width=w, height=h)
+
+    global urlContent
+    urlContent = tkinter.StringVar()
+    uc_enter = ttk.Entry(frame0, width=60, textvariable=urlContent)
+    uc_enter.place(relx=.2, rely=.2)
+    ttk.Label(frame0, text="Browser", background="#61afef", foreground="#ffffff").place(relx=.1, rely=.2)
+    ttk.Button(
+        frame0, text="🔍 Search...", width=10, command=lambda: search_in_browser(urlContent.get())
+    ).place(relx=.8, rely=.2)
+    uc_enter.bind('<Return>', on_enter)
+
     ttk.Label(frame0, width=w, background=globalColor, compound="center").place(relx=0, rely=.02, height=70)
     threading.Thread(target=lambda: beautifulSentence(frame0, w)).start()
 
@@ -179,9 +212,9 @@ def basicFrame0(w, h, window):
     # 二刺猿
     frameEntertainment.EntertainmentFrame(frameM)
 
-    # 5行7列
+    # 4行7列
     i = 0
-    j = 2
+    j = 3
     for key in dictFrame:
         if i < 5:
             if j < 9:
