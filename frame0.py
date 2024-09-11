@@ -14,7 +14,7 @@ import webbrowser
 import urllib.parse
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
     singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, makeKey, \
-    wifiInfor, frameEntertainment, openWeather, aboutPG
+    wifiInfor, frameEntertainment, openWeather, aboutPG, frameString
 
 globalColor = "#c7dddd"
 
@@ -63,11 +63,20 @@ def search_in_browser(query):
     # 使用bing搜索指定的查询
     search_url = "https://www.bing.com/search?q={}".format(urllib.parse.quote(query))
 
-    """
-    Google: https://www.google.com/search?q={}
-    Bing: https://www.bing.com/search?q={}
-    DuckDuckGo: https://duckduckgo.com/?q={}
-    Baidu: https://www.baidu.com/s?wd={}
+    """有些链接可能失效了，请自行更新
+    "google": "https://www.google.com/search?q={}",
+    "bing": "https://www.bing.com/search?q={}",
+    "duckduckgo": "https://duckduckgo.com/?q={}",
+    "baidu": "https://www.baidu.com/s?wd={}",
+    "yahoo": "https://search.yahoo.com/search?p={}",
+    "yandex": "https://yandex.ru/search/?text={}",
+    "blekko": "https://www.blekko.com/?q={}",
+    "ecosia": "https://www.ecosia.org/search?q={}",
+    "lycos": "https://www.lycos.com/search?q={}",
+    "searx": "https://searx.me/?q={}",
+    "swisscows": "https://swisscows.com/search?q={}",
+    "sogou": "https://www.sogou.com/web?query={}",
+    "bing_china": "https://cn.bing.com/search?q={}",
     """
 
     # 打开默认浏览器并导航到搜索URL
@@ -124,10 +133,14 @@ def basicFrame0(w, h, window):
         f2.place(relx=0, rely=0, width=w, height=h)
 
     def buttons(targetFrame: ttk.Frame, text: str, rx, ry, width=16):
-        ttk.Button(frame0, text=text, width=width,
-                   command=lambda: convertFrame(frame0, targetFrame)).place(relx=rx, rely=ry)  # 进入该frame的按钮
-        ttk.Button(targetFrame, width=8, text='返回',
-                   command=lambda: convertFrame(targetFrame, frame0)).place(relx=.9, rely=.9)
+        ttk.Button(
+            frame0, text=text, width=width,
+            command=lambda: convertFrame(frame0, targetFrame)
+        ).place(relx=rx, rely=ry)  # 进入该frame的按钮
+        ttk.Button(
+            targetFrame, width=8, text='返回',
+            command=lambda: convertFrame(targetFrame, frame0)
+        ).place(relx=.9, rely=.9)
 
     # 产生frame框架
     frameMakeFiles = ttk.Frame(window)
@@ -146,6 +159,7 @@ def basicFrame0(w, h, window):
     framePassword = ttk.Frame(window)
     frameWiFi = ttk.Frame(window)
     frameM = ttk.Frame(window)
+    frameStr = ttk.Frame(window)
 
     # 最多34个，不能再多了，多了就要重构一下了
     # 由于循环的关系，每隔5个按钮就会跳过一个
@@ -175,6 +189,7 @@ def basicFrame0(w, h, window):
         "Bug-3": 3,
 
         "Entertainment": frameM,
+        "字符串运算": frameStr,
 
     }
 
@@ -211,6 +226,8 @@ def basicFrame0(w, h, window):
     wifiInfor.wifiFrame(frameWiFi)
     # 二刺猿
     frameEntertainment.EntertainmentFrame(frameM)
+    # 字符串运算
+    frameString.frameString(frameStr)
 
     # 4行7列
     i = 0
