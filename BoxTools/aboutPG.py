@@ -10,7 +10,7 @@ from tkinter.scrolledtext import ScrolledText
 import tkinter as tk
 import requests
 
-nowTag = "v1.0.11"
+nowTag = "v1.0.12"
 flag = True
 
 
