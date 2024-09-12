@@ -40,6 +40,7 @@ def openAPI():
 
 
 def save():
+    tkcbx.config(state="normal")
     if not os.path.isdir(".\\setting"):
         os.mkdir(".\\setting")
     SettingInfor = {
@@ -50,7 +51,9 @@ def save():
         "mailCode": mailCode.get(),
         "city": city.get(),
         "openweatherAPI": opwAPI.get(),
+        "browser": browser.get(),
     }
+    tkcbx.config(state="readonly")
     with open(".\\setting\\Config.txt", "w", encoding="utf-8") as file:
         json.dump(SettingInfor, file, ensure_ascii=False, indent=4)
 
@@ -58,13 +61,13 @@ def save():
 
 
 def frameSetting(window):
-    global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI
+    global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, tkcbx
     (
-        directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI
+        directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser
     ) = \
         (
             tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(),
-            tk.StringVar()
+            tk.StringVar(), tk.StringVar()
         )
 
     # 音乐文件夹设置
@@ -82,14 +85,16 @@ def frameSetting(window):
     # 快捷方式
     # C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
     # C:\ProgramData\Microsoft\Windows\Start Menu\Programs
-    ttk.Button(window, text="开机自启动，添加到开始菜单，创建桌面快捷方式",
-               command=lambda:
-               messagebox.showinfo(
-                   title="设置指南",
-                   message="自己动手，~~~~!"
-                           "\n设置开机自启动:将主文件的快捷方式放到[C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup]"
-                           "\n添加到开始菜单:主文件的快捷方式放到[C:\ProgramData\Microsoft\Windows\Start Menu\Programs]"
-                           "\n创建桌面快捷方式:\n快捷方式放到桌面就可以了")).place(relx=.07, rely=.2)
+    ttk.Button(
+        window, text="开机自启动，添加到开始菜单，创建桌面快捷方式",
+        command=lambda:
+        messagebox.showinfo(
+            title="设置指南",
+            message="自己动手，~~~~!"
+                    "\n设置开机自启动:将主文件的快捷方式放到[C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup]"
+                    "\n添加到开始菜单:主文件的快捷方式放到[C:\ProgramData\Microsoft\Windows\Start Menu\Programs]"
+                    "\n创建桌面快捷方式:\n快捷方式放到桌面就可以了")
+    ).place(relx=.07, rely=.2)
 
     ttk.Label(window, text="设置[Python第三方库工具]导出路径(必须是.txt文件结尾)").place(relx=.02, rely=.32)
     tp = ttk.Entry(window, textvariable=TDpath, width=14)
@@ -97,14 +102,17 @@ def frameSetting(window):
     ttk.Button(window, text="选择", command=lambda: find_file(tp)).place(relx=.2, rely=.415)
 
     # 设置首页美文
-    instruction = ("当你自定义了美文，原有的API将不会生效，\n"
-                   "你可以定义多个，但要分行列出，\n"
-                   "使用此功能可以在一定程度上加速程序打开，\n"
-                   "并且会取消首页美文对互联网的依赖，建议使用;\n"
-                   "当你清空文件或者移动删除了该文件，API生效。")
+    instruction = (
+        "当你自定义了美文，原有的API将不会生效，\n"
+        "你可以定义多个，但要分行列出，\n"
+        "使用此功能可以在一定程度上加速程序打开，\n"
+        "并且会取消首页美文对互联网的依赖，建议使用;\n"
+        "当你清空文件或者移动删除了该文件，API生效。")
     ttk.Button(window, text="自定义首页美文", command=openAPI).place(relx=.06, rely=.52)
-    ttk.Button(window, text="该项说明",
-               command=lambda: messagebox.showinfo(title="提示信息", message=instruction)).place(relx=.22, rely=.52)
+    ttk.Button(
+        window, text="该项说明",
+        command=lambda: messagebox.showinfo(title="提示信息", message=instruction)
+    ).place(relx=.22, rely=.52)
 
     # 设置邮箱，配置授权码
     ttk.Label(window, text="配置邮箱").place(relx=.02, rely=.6)
@@ -119,6 +127,16 @@ def frameSetting(window):
     ttk.Label(window, text="openWeather API").place(relx=.02, rely=.9)
     ttk.Entry(window, width=20, textvariable=opwAPI).place(relx=.2, rely=.9)
 
+    # 设置主页浏览器
+    browsers = [
+        'google', 'bing', 'duckduckgo', 'baidu', 'yahoo', 'yandex', 'blekko', 'ecosia', 'lycos', 'searx',
+        'swisscows', 'sogou', 'bing_china'
+    ]
+    ttk.Label(window, text="搜索引擎").place(relx=.6, rely=.1)
+    browser.set("bing")
+    tkcbx = ttk.Combobox(window, values=browsers, textvariable=browser, state="readonly", width=10)
+    tkcbx.place(relx=.7, rely=.1)
+
     try:
         with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
             myDict = json.load(myF)
@@ -129,8 +147,8 @@ def frameSetting(window):
             mailCode.set(myDict.get("mailCode"))
             city.set(myDict.get("city"))
             opwAPI.set(myDict.get("openweatherAPI"))
+            browser.set(myDict.get("browser"))
     except BaseException:
         pass
 
-    # 保存按钮
     ttk.Button(window, text="保存", command=save, width=8).place(relx=.9, rely=.02)

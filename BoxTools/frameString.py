@@ -6,6 +6,8 @@ import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext
 import pyperclip
 
+left = .72
+
 
 def reverseString(original_string="Hello, World!"):
     outst.config(state="normal")
@@ -91,14 +93,33 @@ def paste():
     st.insert("end", t)
 
 
+def calculateStrs(e):
+    outs = st.get("1.0", "end") * ent.get()
+    outst.config(state="normal")
+    outst.delete("1.0", "end")
+    outst.insert("end", outs)
+    outst.config(state="disabled")
+    # ent.set(2)
+    nt.place_forget()
+
+
 def frameString(frame):
+    ttk.Label(frame, text="字符串运算").place(relx=.45, rely=.02)
+    ttk.Label(frame, text="IN").place(relx=.1, rely=.05)
+    ttk.Label(frame, text="OUT").place(relx=.1, rely=.45)
     ttk.Label(frame, text="灵感来源：刘慈欣《宇宙坍缩》").place(relx=.02, rely=.95)
 
-    global st, outst
+    global st, outst, nt, ent
+
     st = scrolledtext.ScrolledText(frame, width=80, height=10)
     st.place(relx=.1, rely=.1)
     outst = scrolledtext.ScrolledText(frame, width=60, height=10, state="disabled")
     outst.place(relx=.1, rely=.5)
+
+    ent = tk.IntVar()
+    nt = ttk.Entry(frame, textvariable=ent, width=3)
+    ent.set(2)
+    nt.bind("<Return>", calculateStrs)
 
     tk.Button(frame, text="Copy", command=lambda: pyperclip.copy(st.get("1.0", "end"))).place(relx=.9, rely=.1)
     tk.Button(frame, text="Clear", command=lambda: st.delete("1.0", "end")).place(relx=.9, rely=.2)
@@ -106,7 +127,6 @@ def frameString(frame):
     tk.Button(frame, text="Copy", command=copy_out).place(relx=.5, rely=.85)
     tk.Button(frame, text="Clear", command=delete_out).place(relx=.6, rely=.85)
 
-    left = .72
     ttk.Button(
         frame, text="反转", command=lambda: reverseString(st.get("1.0", "end")), width=8
     ).place(relx=left, rely=.5)
@@ -127,23 +147,24 @@ def frameString(frame):
         frame, text="编码", command=lambda: outCode(st.get("1.0", "end")), width=8
     ).place(relx=left + .1, rely=.6)
     ttk.Button(
-        frame, text="造句", command=lambda: messagebox.showinfo(title="提示信息", message="造句请找AI"), width=8
+        frame, text="重复", command=lambda: nt.place(relx=left + .2, rely=.7), width=8
     ).place(relx=left + .1, rely=.7)
     ttk.Button(
         frame, text="压缩", command=lambda: messagebox.showinfo(title="提示信息", message="压缩请找AI"), width=8
     ).place(relx=left + .1, rely=.8)
 
 
-# if __name__ == '__main__':
-#     window = tk.Tk()
-#     window.title(f"字符串运算")
-#     screen_w, screen_h = window.winfo_screenwidth(), window.winfo_screenheight()
-#     w, h = int(screen_w / 2), int(screen_h / 2)
-#     window.geometry(f'{w}x{h}+{int(screen_w / 4)}+{int(screen_h / 4)}')
-#     window.resizable(False, False)
-#
-#     frameS = ttk.Frame(width=w, height=h)
-#     frameString(frameS)
-#     frameS.place(relx=0, rely=0)
-#
-#     window.mainloop()
+if __name__ == '__main__':
+    pass
+    # window = tk.Tk()
+    # window.title(f"字符串运算")
+    # screen_w, screen_h = window.winfo_screenwidth(), window.winfo_screenheight()
+    # w, h = int(screen_w / 2), int(screen_h / 2)
+    # window.geometry(f'{w}x{h}+{int(screen_w / 4)}+{int(screen_h / 4)}')
+    # window.resizable(False, False)
+    #
+    # frameS = ttk.Frame(width=w, height=h)
+    # frameString(frameS)
+    # frameS.place(relx=0, rely=0)
+    #
+    # window.mainloop()
