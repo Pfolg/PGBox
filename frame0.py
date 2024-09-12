@@ -2,6 +2,7 @@
 # Environment    PyCharm
 # File_name   frame0 |User    Pfolg
 # 2024/7/20   13:23
+import json
 import os
 import random
 import tkinter
@@ -23,6 +24,32 @@ def openFile(path=".\\README.md"):
     kk = threading.Thread(target=lambda: os.system(path))
     kk.start()
     kk = None
+
+
+browsers = {
+    # 有些链接可能失效，请自行更新
+    "google": "https://www.google.com/search?q={}",
+    "bing": "https://www.bing.com/search?q={}",
+    "duckduckgo": "https://duckduckgo.com/?q={}",
+    "baidu": "https://www.baidu.com/s?wd={}",
+    "yahoo": "https://search.yahoo.com/search?p={}",
+    "yandex": "https://yandex.ru/search/?text={}",
+    "blekko": "https://www.blekko.com/?q={}",
+    "ecosia": "https://www.ecosia.org/search?q={}",
+    "lycos": "https://www.lycos.com/search?q={}",
+    "searx": "https://searx.me/?q={}",
+    "swisscows": "https://swisscows.com/search?q={}",
+    "sogou": "https://www.sogou.com/web?query={}",
+    "bing_china": "https://cn.bing.com/search?q={}",
+}
+try:
+    with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+        myDict = json.load(myF)
+        browser = myDict.get("browser")
+        if not browser:
+            browser = "bing"
+except FileNotFoundError:
+    browser = "bing"
 
 
 def beautifulSentence(frame, w):
@@ -50,9 +77,10 @@ def beautifulSentence(frame, w):
         except BaseException:
             sentence = ""
         try:
-            ttk.Label(frame, text="    " + sentence, font=("微软雅黑", 10), background=globalColor,
-                      compound="center", width=w, foreground="#706b67"
-                      ).place(relx=0, rely=.02, height=70)
+            ttk.Label(
+                frame, text="    " + sentence, font=("微软雅黑", 10), background=globalColor,
+                compound="center", width=w, foreground="#706b67"
+            ).place(relx=0, rely=.02, height=70)
         except RuntimeError:
             break
         # 30秒刷新一次，多了会被网站列入黑名单
@@ -60,24 +88,9 @@ def beautifulSentence(frame, w):
 
 
 def search_in_browser(query):
+    broUrl = browsers.get(browser)
     # 使用bing搜索指定的查询
-    search_url = "https://www.bing.com/search?q={}".format(urllib.parse.quote(query))
-
-    """有些链接可能失效了，请自行更新
-    "google": "https://www.google.com/search?q={}",
-    "bing": "https://www.bing.com/search?q={}",
-    "duckduckgo": "https://duckduckgo.com/?q={}",
-    "baidu": "https://www.baidu.com/s?wd={}",
-    "yahoo": "https://search.yahoo.com/search?p={}",
-    "yandex": "https://yandex.ru/search/?text={}",
-    "blekko": "https://www.blekko.com/?q={}",
-    "ecosia": "https://www.ecosia.org/search?q={}",
-    "lycos": "https://www.lycos.com/search?q={}",
-    "searx": "https://searx.me/?q={}",
-    "swisscows": "https://swisscows.com/search?q={}",
-    "sogou": "https://www.sogou.com/web?query={}",
-    "bing_china": "https://cn.bing.com/search?q={}",
-    """
+    search_url = broUrl.format(urllib.parse.quote(query))
 
     # 打开默认浏览器并导航到搜索URL
     webbrowser.open_new_tab(search_url)
@@ -96,7 +109,7 @@ def basicFrame0(w, h, window):
     urlContent = tkinter.StringVar()
     uc_enter = ttk.Entry(frame0, width=60, textvariable=urlContent)
     uc_enter.place(relx=.2, rely=.2)
-    ttk.Label(frame0, text="Browser", background="#61afef", foreground="#ffffff").place(relx=.1, rely=.2)
+    ttk.Label(frame0, text=browser, background="#61afef", foreground="#ffffff").place(relx=.1, rely=.2)
     ttk.Button(
         frame0, text="🔍 Search...", width=10, command=lambda: search_in_browser(urlContent.get())
     ).place(relx=.8, rely=.2)
