@@ -6,8 +6,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext
 import pyperclip
 
-left = .72
-
 
 def reverseString(original_string="Hello, World!"):
     outst.config(state="normal")
@@ -127,31 +125,59 @@ def frameString(frame):
     tk.Button(frame, text="Copy", command=copy_out).place(relx=.5, rely=.85)
     tk.Button(frame, text="Clear", command=delete_out).place(relx=.6, rely=.85)
 
-    ttk.Button(
-        frame, text="反转", command=lambda: reverseString(st.get("1.0", "end")), width=8
-    ).place(relx=left, rely=.5)
-    ttk.Button(
-        frame, text="长度", command=lambda: calculateString(st.get("1.0", "end")), width=8
-    ).place(relx=left, rely=.6)
-    ttk.Button(
-        frame, text="转码", command=lambda: upperAndLower(st.get("1.0", "end")), width=8
-    ).place(relx=left, rely=.7)
-    ttk.Button(
-        frame, text="解码", command=lambda: inCode(st.get("1.0", "end")), width=8
-    ).place(relx=left, rely=.8)
+    # ttk.Button(
+    #     frame, text="反转", command=lambda: reverseString(st.get("1.0", "end")), width=8
+    # ).place(relx=left, rely=.5)
+    # ttk.Button(
+    #     frame, text="长度", command=lambda: calculateString(st.get("1.0", "end")), width=8
+    # ).place(relx=left, rely=.6)
+    # ttk.Button(
+    #     frame, text="转码", command=lambda: upperAndLower(st.get("1.0", "end")), width=8
+    # ).place(relx=left, rely=.7)
+    # ttk.Button(
+    #     frame, text="解码", command=lambda: inCode(st.get("1.0", "end")), width=8
+    # ).place(relx=left, rely=.8)
+    #
+    # ttk.Button(
+    #     frame, text="转数", command=lambda: inCode2(st.get("1.0", "end")), width=8
+    # ).place(relx=left + .1, rely=.5)
+    # ttk.Button(
+    #     frame, text="编码", command=lambda: outCode(st.get("1.0", "end")), width=8
+    # ).place(relx=left + .1, rely=.6)
+    # ttk.Button(
+    #     frame, text="重复", command=lambda: nt.place(relx=left + .2, rely=.7), width=8
+    # ).place(relx=left + .1, rely=.7)
+    # ttk.Button(
+    #     frame, text="压缩", command=lambda: messagebox.showinfo(title="提示信息", message="压缩请找AI"), width=8
+    # ).place(relx=left + .1, rely=.8)
 
-    ttk.Button(
-        frame, text="转数", command=lambda: inCode2(st.get("1.0", "end")), width=8
-    ).place(relx=left + .1, rely=.5)
-    ttk.Button(
-        frame, text="编码", command=lambda: outCode(st.get("1.0", "end")), width=8
-    ).place(relx=left + .1, rely=.6)
-    ttk.Button(
-        frame, text="重复", command=lambda: nt.place(relx=left + .2, rely=.7), width=8
-    ).place(relx=left + .1, rely=.7)
-    ttk.Button(
-        frame, text="压缩", command=lambda: messagebox.showinfo(title="提示信息", message="压缩请找AI"), width=8
-    ).place(relx=left + .1, rely=.8)
+    Buttons = {
+        "反转": lambda: reverseString(st.get("1.0", "end").strip()),
+        "长度": lambda: calculateString(st.get("1.0", "end").strip()),
+        "转码": lambda: upperAndLower(st.get("1.0", "end").strip()),
+        "解码": lambda: inCode(st.get("1.0", "end").strip()),
+
+        "间隔": "PGBox",  # 中间会跳过一个，拿这个来充数
+
+        "转数": lambda: inCode2(st.get("1.0", "end").strip()),
+        "编码": lambda: outCode(st.get("1.0", "end").strip()),
+        "重复": lambda: nt.place(relx=.92, rely=.7),
+        "压缩": lambda: messagebox.showinfo(title="提示信息", message="压缩请找AI")
+    }
+    j = .5  # y
+    f = 0  # 计数
+    left = .72  # 左列x
+    for item in Buttons:
+        if f <= 3:
+            ttk.Button(
+                frame, text=item, command=Buttons.get(item), width=8
+            ).place(relx=left, rely=j)
+            f += 1
+            j += .1
+        else:
+            f = 0
+            left += .1
+            j = .5
 
 
 if __name__ == '__main__':

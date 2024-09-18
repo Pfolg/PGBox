@@ -7,17 +7,6 @@ import os
 from tkinter import messagebox
 import threading
 
-
-def autoShutdown():
-    os.system(".\\BoxTools\\autoShutdown.py")
-
-
-def start3process():
-    p1 = threading.Thread(target=autoShutdown)
-    p1.start()
-    p1 = None
-
-
 lockInfo = ("没有弄懂这个程序怎么运行的请勿使用!\n"
             "BoxTools里有一个[WinLock.py]的文件，\n"
             "将它放到启动文件夹就可以实现掩耳盗铃的电脑锁了，\n"
@@ -44,7 +33,7 @@ btuComDict = {
     "Bug-2": 2,
 
     "电脑锁": lambda: messagebox.showinfo(title="提示信息", message=lockInfo),
-    "定时关机": lambda: start3process(),
+    "py 定时关机": lambda: threading.Thread(target=lambda: os.system(".\\BoxTools\\autoShutdown.py")).start(),
     "py 快捷方式脚本": lambda: os.system("start .\\BoxTools\\shortcutMaker.pyw"),
     "web 文字转语音": lambda: os.system("start https://ttsmaker.cn/"),
     "web 文件转换": lambda: os.system("start https://convertio.co/zh/"),
@@ -59,8 +48,8 @@ btuComDict = {
 
     "Bug-4": 4,
 
-    # "py Sparkai": lambda: os.system("start .\\BoxTools\\AI_window.exe")
-
+    "web 进制转换 9+": lambda: os.system(
+        "start https://cn.bing.com/search?q=%E8%AE%A1%E6%95%B0%E5%88%B6%E5%8F%98%E6%8D%A2%E5%99%A8")
 }
 
 
@@ -80,3 +69,10 @@ def winFunction(frame):
         else:
             i = 0
             j += 1
+
+    ttk.Button(
+        frame, text="说明", width=8, command=lambda: messagebox.showinfo(
+            title="提示信息",
+            message="有些功能尚不稳定，请谨慎使用，若发现程序问题，请积极到官网反馈"
+                    "\n开发者不会承担因不当使用程序而对用户财产造成损害之责任")
+    ).place(relx=.8, rely=.9)
