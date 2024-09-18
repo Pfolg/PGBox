@@ -42,14 +42,24 @@ browsers = {
     "sogou": "https://www.sogou.com/web?query={}",
     "bing_china": "https://cn.bing.com/search?q={}",
 }
-try:
-    with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
-        myDict = json.load(myF)
-        browser = myDict.get("browser")
+
+
+def findBrowser():
+    global browser
+    try:
+        browserFile = open(".\\setting\\Config.txt", "r", encoding="utf-8")
+        brDict = json.load(browserFile)
+        browser = brDict.get("browser")
+        browserFile.close()
         if not browser:
             browser = "bing"
-except FileNotFoundError:
-    browser = "bing"
+    except FileNotFoundError:
+        browser = "bing"
+
+    return browser
+
+
+threading.Thread(target=findBrowser).start()
 
 
 def beautifulSentence(frame, w):
