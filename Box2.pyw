@@ -2,6 +2,7 @@
 # Environment    PyCharm
 # File_name   Box2 |User    Pfolg
 # 2024/8/1   10:02
+# 此代码仅做过往尝试的参考，不再更新
 import hashlib
 import json
 import os
