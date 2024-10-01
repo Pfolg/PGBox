@@ -28,17 +28,16 @@ def openAPI():
     if not os.path.isfile(".\\setting\\Setting-APIuse.txt"):
         with open(".\\setting\\Setting-APIuse.txt", "w", encoding="utf-8") as g4:
             g4.write("")
-    else:
-        with open(".\\run.bat", "w", encoding="utf-8") as file:
-            file.write(r"start .\setting\Setting-APIuse.txt")
-        os.system(".\\run.bat")
-        os.remove(".\\run.bat")
+            messagebox.showinfo("Information", "Can't find the file and create one.")
+    os.system(r"start .\setting\Setting-APIuse.txt")
 
 
 def save():
     tkcbx.config(state="normal")
-    if not os.path.isdir(".\\setting"):
-        os.mkdir(".\\setting")
+    with open(".\\setting\\Config.txt", "r", encoding="utf-8") as originFile:
+        originDict = json.load(originFile)
+    # if not os.path.isdir(".\\setting"):
+    #     os.mkdir(".\\setting")
     SettingInfor = {
         "musicPlayerDirectory": directoryPath.get(),
         "RandomNameDirectory": excelPath.get(),
@@ -48,12 +47,19 @@ def save():
         "city": city.get(),
         "openweatherAPI": opwAPI.get(),
         "browser": browser.get(),
+        "XHide": XHide.get()
     }
+    for i in SettingInfor:
+        originDict[i] = SettingInfor.get(i)
     tkcbx.config(state="readonly")
     with open(".\\setting\\Config.txt", "w", encoding="utf-8") as file:
-        json.dump(SettingInfor, file, ensure_ascii=False, indent=4)
+        json.dump(originDict, file, ensure_ascii=False, indent=4)
 
     messagebox.showinfo(title="提示信息", message="保存成功!\n重启后生效!")
+
+
+def openConfig(e):
+    os.system("start .\\setting\\Config.txt")
 
 
 if __name__ == '__main__':
@@ -68,13 +74,13 @@ if __name__ == '__main__':
     window.resizable(False, False)
     window.iconbitmap(".\\resource\\pg.ico")
 
-    global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, tkcbx
+    global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, tkcbx, XHide
     (
-        directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser
+        directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, XHide
     ) = \
         (
             tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(),
-            tk.StringVar(), tk.StringVar()
+            tk.StringVar(), tk.StringVar(), tk.BooleanVar()
         )
 
     # 音乐文件夹设置
@@ -110,7 +116,7 @@ if __name__ == '__main__':
 
     # 设置首页美文
     instruction = (
-        "当你自定义了美文，原有的API将不会生效，\n"
+        "当你自定义了美文，原有的API(30s获取一次)将不会生效，\n"
         "你可以定义多个，但要分行列出，\n"
         "使用此功能可以在一定程度上加速程序打开，\n"
         "并且会取消首页美文对互联网的依赖，建议使用;\n"
@@ -144,6 +150,9 @@ if __name__ == '__main__':
     tkcbx = ttk.Combobox(window, values=browsers, textvariable=browser, state="readonly", width=10)
     tkcbx.place(relx=.7, rely=.1)
 
+    # 点X直接退出的设置
+    ttk.Checkbutton(window, variable=XHide, text="点击X隐藏窗口").place(relx=.6, rely=.2)
+
     try:
         with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
             myDict = json.load(myF)
@@ -155,8 +164,12 @@ if __name__ == '__main__':
             city.set(myDict.get("city"))
             opwAPI.set(myDict.get("openweatherAPI"))
             browser.set(myDict.get("browser"))
+            XHide.set(myDict.get("XHide"))
     except BaseException:
         pass
 
-    ttk.Button(window, text="保存", command=save, width=8).place(relx=.9, rely=.02)
+    tk.Button(window, text="SAVE", command=save, width=8, background="red").place(relx=.9, rely=.02)
+    bottomLabel = ttk.Label(window, text="Open the config file", foreground="blue", cursor="hand2")
+    bottomLabel.place(relx=.7, rely=.02)
+    bottomLabel.bind("<Button-1>", openConfig)
     window.mainloop()

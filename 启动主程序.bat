@@ -1,1 +1,1 @@
-start PGBox.pyw
+pythonw PGBox.pyw

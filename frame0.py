@@ -53,7 +53,7 @@ def findBrowser():
         browserFile.close()
         if not browser:
             browser = "bing"
-    except FileNotFoundError:
+    except BaseException:
         browser = "bing"
 
     return browser
@@ -68,27 +68,30 @@ def beautifulSentence(frame, w):
         try:
             with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
                 listSentence = file.readlines()
-        except FileNotFoundError:
+        except BaseException:
             listSentence = ""
 
         try:
             if listSentence:
                 newList = [s.rstrip('\r\t\n') for s in listSentence]
-                sentence = newList[random.randint(0, len(newList) - 1)]
+                sentence.set("    " + newList[random.randint(0, len(newList) - 1)])
             else:
+                "WAY1"
                 # url = "https://v1.hitokoto.cn/"
                 # content = requests.get(url)
-                # sentence = eval(content.text).get("hitokoto")
+                # sentence.set("    " + eval(content.text).get("hitokoto"))
+                # print(eval(content.text).get("hitokoto"))
 
+                "WAY2"
                 url = "https://tenapi.cn/v2/yiyan"
                 content = requests.get(url)
-                sentence = content.text
-                # print(content.text)
+                sentence.set("    "+content.text)
+                print(content.text)
         except BaseException:
-            sentence = ""
+            sentence.set("    Can't show sentence, please check your network or the Setting file...")
         try:
             ttk.Label(
-                frame, text="    " + sentence, font=("微软雅黑", 10), background=globalColor,
+                frame, textvariable=sentence, font=("微软雅黑", 10), background=globalColor,
                 compound="center", width=w, foreground="#706b67"
             ).place(relx=0, rely=.02, height=70)
         except RuntimeError:
@@ -115,7 +118,8 @@ def basicFrame0(w, h, window):
     frame0 = ttk.Frame(window)
     frame0.place(relx=0, rely=0, width=w, height=h)
 
-    global urlContent
+    global urlContent, sentence
+    sentence = tkinter.StringVar()
     urlContent = tkinter.StringVar()
     uc_enter = ttk.Entry(frame0, width=60, textvariable=urlContent)
     uc_enter.place(relx=.2, rely=.2)
@@ -126,7 +130,11 @@ def basicFrame0(w, h, window):
     uc_enter.bind('<Return>', on_enter)
 
     ttk.Label(frame0, width=w, background=globalColor, compound="center").place(relx=0, rely=.02, height=70)
-    threading.Thread(target=lambda: beautifulSentence(frame0, w)).start()
+    ttk.Label(
+        frame0, textvariable=sentence, font=("微软雅黑", 10), background=globalColor,
+        compound="center", width=w, foreground="#706b67"
+    ).place(relx=0, rely=.02, height=70)
+    threading.Thread(target=lambda: beautifulSentence(frame0, w), daemon=True).start()
 
     # 显示天气
     openWeather.openWeather(frame0)

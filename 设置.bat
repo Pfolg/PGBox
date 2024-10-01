@@ -1,1 +1,1 @@
-start Setting.pyw
+pythonw Setting.pyw
