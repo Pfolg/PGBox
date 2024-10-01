@@ -10,7 +10,7 @@ from tkinter.scrolledtext import ScrolledText
 import tkinter as tk
 import requests
 
-nowTag = "v1.0.12"
+AppVersion = "v1.0.12"
 flag = True
 
 
@@ -30,11 +30,11 @@ def checkTag():
         # print(f"Release Name: {release['name']}")
         # print(f"Release Date: {release['published_at']}")
         # print(f"Release Description: {release['body']}")
-        if nowTag == release['tag_name']:
+        if AppVersion == release['tag_name']:
             infTxt = "当前是最新版！\n"
 
         else:
-            infTxt = f"当前不是最新版！\t{nowTag}>>>{release['tag_name']}\n"
+            infTxt = f"当前不是最新版！\t{AppVersion}>>>{release['tag_name']}\n"
 
         messagebox.showinfo(
             title="PGBox", message=
@@ -59,12 +59,14 @@ def openFile(path=".\\README.md"):
 def PGAbout(frame):
     ttk.Label(frame, text="关于PGBox", font=("微软雅黑", 16)).place(relx=.02, rely=.02)
     ttk.Label(
-        frame, text=nowTag, font=("微软雅黑 bold", 16), foreground="#daa121"
+        frame, text=AppVersion, font=("微软雅黑 bold", 16), foreground="#67e6ff"
     ).place(relx=.82, rely=.02)
 
-    l1 = ttk.Label(frame, text=("By continuing to use this software, you agree to this LCENSE\n"
-                                "继续使用本软件，即表示您同意本LCENSE"), font=("微软雅黑 bold", 12)
-                   )
+    l1 = ttk.Label(
+        frame, text=(
+            "By continuing to use this software, you agree to this LCENSE\n"
+            "继续使用本软件，即表示您同意本LCENSE"), font=("微软雅黑 bold", 12)
+    )
 
     s1 = ScrolledText(frame, width=80, height=15)
 
@@ -114,7 +116,7 @@ def PGAbout(frame):
         forgetThem()
         global flag
         flag = True
-        threading.Thread(target=scl).start()
+        threading.Thread(target=scl, daemon=True).start()
         listBtu = [bi, git, csdn]
         for i in range(len(listBtu)):
             listBtu[i].place(relx=.1 + 0.1 * i, rely=.3)

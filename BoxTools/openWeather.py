@@ -13,6 +13,8 @@ def openWeather(frame):
             myDict = json.load(myF)
             city = myDict.get("city")
             opwAPI = myDict.get("openweatherAPI")
+            if not city and opwAPI:
+                return  # 如果没有城市和API就终止函数
     except BaseException:
         return
     language = 'zh_cn'  # 简体中文  &lang={language}

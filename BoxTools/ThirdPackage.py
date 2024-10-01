@@ -31,6 +31,7 @@ listUrl = [*dictUrl.keys()]
 
 
 def osRun():
+    # 当时没怎么在意os的命令，于是现在想改已经晚了，能跑的代码就不改了
     os.system(".\\run.bat")
     time.sleep(0.5)
     os.remove(".\\run.bat")
@@ -155,19 +156,21 @@ def ThirdPackage(frame):
         else:
             package3_forgetAll()
 
-    msg = ("注意事项:\n"
-           "0、没有Python解释器的请勿使用!\n"
-           "1、安装和卸载包都必须填入包名;\n"
-           "2、添加镜像源可以选择一个添加;\n"
-           "3、移除镜像源是一次性全部移除;\n"
-           "4、使用镜像源安装某包需要包名和镜像源;\n"
-           "5、导出已安装包信息需要提前设置路径;\n"
-           "6、两种升级包程序都是基于pip-review使用的,\n"
-           "    程序会自动安装这个库,\n"
-           "    没有Python环境就无法使用;\n"
-           "7、本插件基于os库实现,会有一个命令行窗口;\n"
-           "8、同时空条件下一次只能安装或卸载一个包,\n"
-           "    否则会导致pip的异常。")
+    msg = (
+        "注意事项:\n"
+        "0、没有Python解释器的请勿使用!\n"
+        "1、安装和卸载包都必须填入包名;\n"
+        "2、添加镜像源可以选择一个添加;\n"
+        "3、移除镜像源是一次性全部移除;\n"
+        "4、使用镜像源安装某包需要包名和镜像源;\n"
+        "5、导出已安装包信息需要提前设置路径;\n"
+        "6、两种升级包程序都是基于pip-review使用的,\n"
+        "    程序会自动安装这个库,\n"
+        "    没有Python环境就无法使用;\n"
+        "7、本插件基于os库实现,会有一个命令行窗口;\n"
+        "8、同时空条件下一次只能安装或卸载一个包,\n"
+        "    否则会导致pip的异常。")
 
-    ttk.Button(frame, text="注意事项", width=8,
-               command=lambda: messagebox.showinfo(title="注意事项", message=msg)).place(relx=.9, rely=.8)
+    ttk.Button(
+        frame, text="注意事项", width=8,
+        command=lambda: messagebox.showinfo(title="注意事项", message=msg)).place(relx=.9, rely=.8)

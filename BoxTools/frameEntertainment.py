@@ -34,7 +34,7 @@ btuComDict = {
                                     "color a\n"
                                     "dir/s"),
     "变身黑客2": lambda: openUrl("http://geekprank.com/hacker"),
-    "关于天文": lambda: openUrl("https://stars.chromeexperiments.com/"),
+    "100000 Stars": lambda: openUrl("https://stars.chromeexperiments.com/"),
     "Bilibili": lambda: os.system("start https://www.bilibili.com/"),
 
     "Bug-2": 2,

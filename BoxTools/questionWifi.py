@@ -16,10 +16,8 @@ name = input("请选择用户配置文件：")
 
 
 def question(ssid):
-    with open(".\\run.bat", "w", encoding="utf-8") as file:
-        file.write(f"netsh wlan show profile name=\"{ssid}\" key=clear\npause")
-    os.system(".\\run.bat")
-    os.remove(".\\run.bat")
+    os.system(f"netsh wlan show profile name=\"{ssid}\" key=clear")
+    os.system("pause")
 
 
 question(name)

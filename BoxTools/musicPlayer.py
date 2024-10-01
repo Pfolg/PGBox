@@ -46,11 +46,13 @@ def musicPlayer(window):
             myDict = json.load(myF)
             DefaultPath = myDict.get("musicPlayerDirectory")
             if not DefaultPath:
-                messagebox.showerror(title="Error",
-                                     message="读取音乐文件夹设置生错误，\n请在[../setting/Setting-musicPlayer.txt]内填入音乐文件夹路径\n"
-                                             "或者使用设置工具")
+                pass
+                # messagebox.showerror(
+                #     title="Error",
+                #     message="读取音乐文件夹设置生错误，\n请在[设置]中设定音乐文件夹路径\n"
+                #             "或者使用设置工具")
     except BaseException:
-        DefaultPath = r"C:\Users\Default\Music"
+        DefaultPath = "%USERPROFILE%\Music"
 
     def pause_music():
         try:
@@ -81,8 +83,9 @@ def musicPlayer(window):
         tk.Label(window, text=txt, foreground="#FFFFFF", background="#c6c8cd", width=70).place(relx=.2, rely=.07)
 
     def music_state(txt: str):
-        tk.Label(window, text=txt, foreground="#000000", font=("微软雅黑", 16), width=8, compound="center"
-                 ).place(relx=.05, rely=.05)
+        tk.Label(
+            window, text=txt, foreground="#000000", font=("微软雅黑", 16), width=8, compound="center"
+        ).place(relx=.05, rely=.05)
 
     def show_music_length(txt: str):
         tk.Label(window, text=txt, width=6).place(relx=.85, rely=.07)
@@ -167,18 +170,23 @@ def musicPlayer(window):
         path = choose_music.get()
         play(path)
 
-    for i, j, k in os.walk(DefaultPath):
-        for mzk in range(len(k)):
-            listbox.insert(tk.END, k[mzk])
-        ttk.Button(window, text="播放选中", command=lambda: play_music2()).place(relx=.73, rely=.8)
+    try:
+        for i, j, k in os.walk(DefaultPath):
+            for mzk in range(len(k)):
+                listbox.insert(tk.END, k[mzk])
+                ttk.Button(window, text="播放选中", command=lambda: play_music2()).place(relx=.73, rely=.8)
+    except BaseException:
+        ttk.Label(window, text="未设置音乐文件夹", foreground="red").place(relx=.63, rely=.8)
 
     # 说明播放器局限
     # ttk.Label(window, text="不支持某些特殊格式").place(relx=.4, rely=.95)
     ttk.Button(
         window, text="帮助", width=8,
-        command=lambda: messagebox.showinfo(title="提示信息", message="[bug]完整运行“播放一次”后程序会终止运行！\n"
-                                                                      "不支持某些特殊格式，如音乐软件的会员格式，\n"
-                                                                      "请在设置中指定音乐文件夹。")
+        command=lambda: messagebox.showinfo(
+            title="提示信息",
+            message="[bug]完整运行“播放一次”后程序会终止运行！\n"
+                    "不支持某些特殊格式，如音乐软件的会员格式，\n"
+                    "请在设置中指定音乐文件夹。")
     ).place(relx=.9, rely=.8)
 
 

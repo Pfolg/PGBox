@@ -16,7 +16,7 @@ lockInfo = ("没有弄懂这个程序怎么运行的请勿使用!\n"
 
 btuComDict = {
     "Windows工具": lambda: os.system(
-        "start \"\" \"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools\""),
+        "start \"\" \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Administrative Tools\""),
     "文件资源管理器": lambda: os.system("start explorer.exe"),
     "设置": lambda: os.system("start ms-settings:"),
     "控制面板": lambda: os.system("start control"),
@@ -44,7 +44,7 @@ btuComDict = {
     "py 计时器": lambda: os.system("start .\\BoxTools\\TimerAPP.pyw"),
     "py 键盘记录": lambda: os.system("start .\\BoxTools\\recordKeyboard.pyw"),
     "py 轰QW-2000": lambda: os.system("start .\\BoxTools\\autoSend.py"),
-    "py txt文件加解密": lambda: os.system("start .\\BoxTools\\txt文件加解密.exe"),
+    "py txt文件加解密": lambda: os.system("start .\\BoxTools\\protectTxt.py"),
 
     "Bug-4": 4,
 
