@@ -39,7 +39,7 @@ def osRun():
 
 def process(vl: int):
     try:
-        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+        with open(".\\setting\\Config.json", "r", encoding="utf-8") as myF:
             myDict = json.load(myF)
             path = myDict.get("ThirdPackageOutputFile")
     except BaseException:
@@ -86,14 +86,12 @@ def process(vl: int):
 
     with open(".\\run.bat", "w", encoding="utf-8") as file:
         file.write(text + "\npause")
-    x = threading.Thread(target=osRun)
-    x.start()
-    x = None
+    threading.Thread(target=osRun).start()
 
 
 def ThirdPackage(frame):
     ttk.Label(frame, text="专为Python懒人打造的交互版pip程序(大概吧)").place(relx=.32, rely=.005)
-    flag = tk.IntVar()
+    # flag = tk.IntVar()
     r0 = ttk.Button(frame, text="安装包", width=18, command=lambda: nextStep(1))
     r1 = ttk.Button(frame, text="卸载包", width=18, command=lambda: nextStep(2))
     r2 = ttk.Button(frame, text="添加镜像源", width=18, command=lambda: nextStep(3))

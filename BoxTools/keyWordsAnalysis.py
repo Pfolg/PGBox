@@ -9,11 +9,12 @@ from tkinter import filedialog
 
 study_url = 'https://gallery.pyecharts.org/#/WordCloud/basic_wordcloud'
 
-information = ("特殊的PDF文件，如图片生成的PDF不可读取;\n"
-               "文本生成的PDF为适用对象;\n"
-               "本插件目前只能读取PDF其他功能后续拓展;\n"
-               "成功运行后会在文件所在目录生成一个.html文件，\n"
-               "打开然后右键保存即可获得.png文件。")
+information = (
+    "特殊的PDF文件，如图片生成的PDF不可读取;\n"
+    "文本生成的PDF为适用对象;\n"
+    "本插件目前只能读取PDF其他功能后续拓展;\n"
+    "成功运行后会在文件所在目录生成一个.html文件，\n"
+    "打开然后右键保存即可获得.png文件。")
 
 
 def analysis(file_name):
@@ -69,8 +70,8 @@ def find_files(x):
     win = tk.Tk()
     win.withdraw()
     file_path = filedialog.askopenfilename()
-    x.delete(0, 'end')
-    x.insert(0, file_path)
+    if file_path:
+        x.set(file_path)
     win.destroy()
 
 
@@ -79,10 +80,10 @@ def analysisWindow(frame):
 
     filePath = tk.StringVar()
     ttk.Label(frame, text="请选择PDF文件", font=("微软雅黑", 20)).place(relx=.35, rely=.2)
-    file = ttk.Entry(frame, textvariable=filePath, width=40)
-    file.place(relx=.3, rely=.4)
-    ttk.Button(frame, text="选择", command=lambda: find_files(file)).place(relx=.6, rely=.398)
+    ttk.Entry(frame, textvariable=filePath, width=40).place(relx=.3, rely=.4)
+    ttk.Button(frame, text="选择", command=lambda: find_files(filePath)).place(relx=.7, rely=.398)
     ttk.Button(frame, text="开始", command=lambda: analysis(filePath.get())).place(relx=.43, rely=.6)
 
-    ttk.Button(frame, text="帮助", command=lambda: messagebox.showinfo(title="帮助", message=information),
-               width=8).place(relx=.8, rely=.9)
+    ttk.Button(
+        frame, text="帮助", command=lambda: messagebox.showinfo(title="帮助", message=information),
+        width=8).place(relx=.8, rely=.9)

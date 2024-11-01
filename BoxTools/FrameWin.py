@@ -2,6 +2,7 @@
 # Environment    PyCharm
 # File_name   FrameWin |User    Pfolg
 # 2024/7/20   20:00
+import webbrowser
 from tkinter import ttk
 import os
 from tkinter import messagebox
@@ -33,23 +34,31 @@ btuComDict = {
     "Bug-2": 2,
 
     "电脑锁": lambda: messagebox.showinfo(title="提示信息", message=lockInfo),
-    "py 定时关机": lambda: threading.Thread(target=lambda: os.system(".\\BoxTools\\autoShutdown.py")).start(),
-    "py 快捷方式脚本": lambda: os.system("start .\\BoxTools\\shortcutMaker.pyw"),
-    "web 文字转语音": lambda: os.system("start https://ttsmaker.cn/"),
-    "web 文件转换": lambda: os.system("start https://convertio.co/zh/"),
+    "py 定时关机": lambda: threading.Thread(target=lambda: os.startfile(".\\BoxTools\\autoShutdownPro.py")).start(),
+    "py 快捷方式脚本": lambda: os.startfile(".\\BoxTools\\shortcutMaker.pyw"),
+    "web 文字转语音": lambda: webbrowser.open("https://ttsmaker.cn/"),
+    "web 文件转换": lambda: webbrowser.open("https://convertio.co/zh/"),
 
     "Bug-3": 3,
 
-    "web 免费素材图片": lambda: os.system("start https://www.pexels.com/zh-cn/"),
-    "py 计时器": lambda: os.system("start .\\BoxTools\\TimerAPP.pyw"),
-    "py 键盘记录": lambda: os.system("start .\\BoxTools\\recordKeyboard.pyw"),
-    "py 轰QW-2000": lambda: os.system("start .\\BoxTools\\autoSend.py"),
-    "py txt文件加解密": lambda: os.system("start .\\BoxTools\\protectTxt.py"),
+    "web 免费素材图片": lambda: webbrowser.open("https://www.pexels.com/zh-cn/"),
+    "py 计时器": lambda: os.startfile(".\\BoxTools\\TimerAPP.pyw"),
+    "py 键盘记录": lambda: os.startfile(".\\BoxTools\\recordKeyboard.pyw"),
+    "py 轰QW-2000": lambda: os.startfile(".\\BoxTools\\autoSend.py"),
+    "py txt文件加解密": lambda: os.startfile(".\\BoxTools\\protectTxt.py"),
 
     "Bug-4": 4,
 
-    "web 进制转换 9+": lambda: os.system(
-        "start https://cn.bing.com/search?q=%E8%AE%A1%E6%95%B0%E5%88%B6%E5%8F%98%E6%8D%A2%E5%99%A8")
+    "web 进制转换 9+": lambda: webbrowser.open(
+        "https://cn.bing.com/search?q=%E8%AE%A1%E6%95%B0%E5%88%B6%E5%8F%98%E6%8D%A2%E5%99%A8"),
+    "py 视频字幕合成": lambda: os.startfile(".\\BoxTools\\makeMp4.py"),
+    "py 中文Gui-NirCmd": lambda: os.startfile(".\\BoxTools\\NirCmd-Gui-Chinese.pyw"),
+    "web 快捷工具栏": lambda: webbrowser.open("https://blog.csdn.net/qq_46603846/article/details/143086863"),
+    "py 激活Windows": lambda: os.startfile(".\\BoxTools\\runwin.py"),
+
+    "Bug-5": 5,
+
+    "py 查看WiFi信息": lambda: os.startfile(".\\BoxTools\\questionWifi.py")
 }
 
 

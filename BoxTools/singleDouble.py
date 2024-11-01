@@ -18,14 +18,9 @@ def writeClick():
 
 def runClick():
     x = targetFile.get()
-    os.system(f".\\BoxTools\\{x}")
-    time.sleep(.5)
-
-
-def myClickRun():
-    x = threading.Thread(target=runClick)
-    x.start()
-    x = None
+    if x:
+        os.startfile(f".\\BoxTools\\{x}")
+        time.sleep(.5)
 
 
 "singleClick.py"
@@ -41,7 +36,9 @@ def singleDouble(frame):
     ttk.Radiobutton(
         frame, text="自动双击", value="doubleClick.py", variable=targetFile, width=10
     ).place(relx=.22, rely=.1)
-    ttk.Button(frame, text="启动", command=myClickRun).place(relx=.12, rely=.2)
+    ttk.Button(
+        frame, text="启动", command=lambda: threading.Thread(target=runClick).start()
+    ).place(relx=.12, rely=.2)
     # ttk.Label(frame, text="请输入点击间隔").place(relx=.02, rely=.1)
     # ttk.Entry(frame, width=8, textvariable=delta).place(relx=.22, rely=.1)
     ttk.Button(

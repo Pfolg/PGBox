@@ -14,8 +14,8 @@ def find_directory(x):
     win = tk.Tk()
     win.withdraw()
     file_path = filedialog.askdirectory()
-    x.delete(0, 'end')
-    x.insert(0, file_path)
+    if file_path:
+        x.set(file_path)
     win.destroy()
 
 
@@ -23,8 +23,8 @@ def find_file(x):
     win = tk.Tk()
     win.withdraw()
     file_path = filedialog.askopenfilename()
-    x.delete(0, 'end')
-    x.insert(0, file_path)
+    if file_path:
+        x.set(file_path)
     win.destroy()
 
 
@@ -38,7 +38,12 @@ def openAPI():
 
 def save():
     tkcbx.config(state="normal")
-    with open(".\\setting\\Config.txt", "r", encoding="utf-8") as originFile:
+    # if not os.path.exists(".\\setting\\Config.json"):
+    #     if not os.path.exists(".\\setting"):
+    #         os.mkdir(".\\setting")
+    #     with open(".\\setting\\Config.json", "w", encoding="utf-8") as startFile:
+    #         json.dump({}, startFile, ensure_ascii=False, indent=4)
+    with open(".\\setting\\Config.json", "r", encoding="utf-8") as originFile:
         originDict = json.load(originFile)
     # if not os.path.isdir(".\\setting"):
     #     os.mkdir(".\\setting")
@@ -51,43 +56,44 @@ def save():
         "city": city.get(),
         "openweatherAPI": opwAPI.get(),
         "browser": browser.get(),
-        "XHide": XHide.get()
+        "XHide": XHide.get(),
+        "nircmd_path": nircmd_path.get(),
     }
     for i in SettingInfor:
         originDict[i] = SettingInfor.get(i)
     tkcbx.config(state="readonly")
-    with open(".\\setting\\Config.txt", "w", encoding="utf-8") as file:
+    with open(".\\setting\\Config.json", "w", encoding="utf-8") as file:
         json.dump(originDict, file, ensure_ascii=False, indent=4)
 
     messagebox.showinfo(title="提示信息", message="保存成功!\n重启后生效!")
 
 
 def openConfig(e):
-    os.system("start .\\setting\\Config.txt")
+    os.system("start .\\setting\\Config.json")
 
 
 def frameSetting(window):
-    # 满天飞的全局变量
-    global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, tkcbx, XHide
+    # 设置默认字体
+    # defaultFont = "Segoe UI"
+
+    global directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, tkcbx, XHide, nircmd_path
     (
-        directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, XHide
+        directoryPath, excelPath, TDpath, mail, mailCode, city, opwAPI, browser, XHide, nircmd_path
     ) = \
         (
             tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(), tk.StringVar(),
-            tk.StringVar(), tk.StringVar(), tk.BooleanVar()
+            tk.StringVar(), tk.StringVar(), tk.BooleanVar(), tk.StringVar()
         )
 
     # 音乐文件夹设置
     ttk.Label(window, text="设置[音乐播放器]的音乐文件夹").place(relx=.02, rely=.02)
-    fp = ttk.Entry(window, textvariable=directoryPath, width=14)
-    fp.place(relx=.25, rely=.018)
-    ttk.Button(window, text="选择", command=lambda: find_directory(fp)).place(relx=.4, rely=.015)
+    ttk.Entry(window, textvariable=directoryPath, width=14).place(relx=.25, rely=.018)
+    ttk.Button(window, text="选择", command=lambda: find_directory(directoryPath)).place(relx=.4, rely=.015)
 
     # 随机点名文件设置
     ttk.Label(window, text="设置[随机点名]的默认文件").place(relx=.02, rely=.12)
-    ep = ttk.Entry(window, textvariable=excelPath, width=14)
-    ep.place(relx=.25, rely=.118)
-    ttk.Button(window, text="选择", command=lambda: find_file(ep)).place(relx=.4, rely=.115)
+    ttk.Entry(window, textvariable=excelPath, width=14).place(relx=.25, rely=.118)
+    ttk.Button(window, text="选择", command=lambda: find_file(excelPath)).place(relx=.4, rely=.115)
 
     # 快捷方式
     # C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
@@ -104,9 +110,8 @@ def frameSetting(window):
     ).place(relx=.07, rely=.2)
 
     ttk.Label(window, text="设置[Python第三方库工具]导出路径(必须是.txt文件结尾)").place(relx=.02, rely=.32)
-    tp = ttk.Entry(window, textvariable=TDpath, width=14)
-    tp.place(relx=.05, rely=.418)
-    ttk.Button(window, text="选择", command=lambda: find_file(tp)).place(relx=.2, rely=.415)
+    ttk.Entry(window, textvariable=TDpath, width=14).place(relx=.05, rely=.418)
+    ttk.Button(window, text="选择", command=lambda: find_file(TDpath)).place(relx=.2, rely=.415)
 
     # 设置首页美文
     instruction = (
@@ -145,10 +150,15 @@ def frameSetting(window):
     tkcbx.place(relx=.7, rely=.1)
 
     # 点X直接退出的设置
-    ttk.Checkbutton(window, variable=XHide, text="点击X隐藏窗口").place(relx=.6, rely=.2)
+    ttk.Checkbutton(window, variable=XHide, text="点击X最小化窗口").place(relx=.6, rely=.2)
+
+    # NirCmd路径设置
+    ttk.Entry(window, textvariable=nircmd_path).place(relx=.6, rely=.4)
+    ttk.Label(window, text="NirCmd路径设置").place(relx=.6, rely=.3)
+    ttk.Button(window, text="选择", command=lambda: find_file(nircmd_path)).place(relx=.8, rely=.4)
 
     try:
-        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+        with open(".\\setting\\Config.json", "r", encoding="utf-8") as myF:
             myDict = json.load(myF)
             directoryPath.set(myDict.get("musicPlayerDirectory"))
             excelPath.set(myDict.get("RandomNameDirectory"))
@@ -159,7 +169,7 @@ def frameSetting(window):
             opwAPI.set(myDict.get("openweatherAPI"))
             browser.set(myDict.get("browser"))
             XHide.set(myDict.get("XHide"))
-
+            nircmd_path.set(myDict.get("nircmd_path"))
     except BaseException:
         pass
 

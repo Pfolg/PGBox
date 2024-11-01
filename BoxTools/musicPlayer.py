@@ -42,7 +42,7 @@ def get_audio_duration(file_path):
 
 def musicPlayer(window):
     try:
-        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+        with open(".\\setting\\Config.json", "r", encoding="utf-8") as myF:
             myDict = json.load(myF)
             DefaultPath = myDict.get("musicPlayerDirectory")
             if not DefaultPath:

@@ -22,7 +22,7 @@ from plyer import notification
 
 def readMailInfo():
     try:
-        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+        with open(".\\setting\\Config.json", "r", encoding="utf-8") as myF:
             myDict = json.load(myF)
             mailConfig = [myDict.get("mail"), myDict.get("mailCode")]
             return mailConfig

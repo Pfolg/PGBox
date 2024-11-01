@@ -10,7 +10,7 @@ from tkinter.scrolledtext import ScrolledText
 import tkinter as tk
 import requests
 
-AppVersion = "v1.0.12"
+AppVersion = "v1.1.1"
 flag = True
 
 
@@ -50,10 +50,8 @@ def checkTag():
         messagebox.showerror(title="PGBox", message="Failed to retrieve data.\n获取失败！")
 
 
-def openFile(path=".\\README.md"):
-    kk = threading.Thread(target=lambda: os.system(path))
-    kk.start()
-    kk = None
+def openIssue(e):
+    os.system("start https://github.com/Pfolg/PGBox/issues")
 
 
 def PGAbout(frame):
@@ -61,6 +59,10 @@ def PGAbout(frame):
     ttk.Label(
         frame, text=AppVersion, font=("微软雅黑 bold", 16), foreground="#67e6ff"
     ).place(relx=.82, rely=.02)
+    ttk.Label(frame, text="无论再微小的错误，都请积极").place(relx=.02, rely=.9)
+    fanKui = ttk.Label(frame, text="反馈", cursor="hand2", foreground="blue")
+    fanKui.place(relx=.225, rely=.9)
+    fanKui.bind("<Button-1>", openIssue)
 
     l1 = ttk.Label(
         frame, text=(
@@ -144,7 +146,7 @@ def PGAbout(frame):
         frame, text="LICENSE", width=8, command=showLICENSE
     ).place(relx=.2, rely=.2)
 
-    ttk.Button(frame, text="阅读文档", command=openFile, width=8).place(relx=.3, rely=.2)
+    ttk.Button(frame, text="阅读文档", command=lambda: os.startfile(".\\README.md"), width=8).place(relx=.3, rely=.2)
 
     ttk.Button(
         frame, text="官方网站", command=lambda: os.system("start https://github.com/Pfolg/PGBox"), width=8

@@ -60,8 +60,8 @@ def find_files(x):
     win = tk.Tk()
     win.withdraw()
     file_path = filedialog.askopenfilename()
-    x.delete(0, 'end')
-    x.insert(0, file_path)
+    if file_path:
+        x.set(file_path)
     win.destroy()
 
 
@@ -70,7 +70,7 @@ def getFileFrame(frame):
     path1, markName = tk.StringVar(), tk.StringVar()
     l1 = ttk.Label(frame, text="输入图片路径")
     e1 = ttk.Entry(frame, width=20, textvariable=path1)
-    b3 = ttk.Button(frame, width=8, text="选择", command=lambda: find_files(e1))
+    b3 = ttk.Button(frame, width=8, text="选择", command=lambda: find_files(path1))
     l2 = ttk.Label(frame, text="输入水印名称")
     e2 = ttk.Entry(frame, width=20, textvariable=markName)
 
@@ -113,19 +113,20 @@ def getFileFrame(frame):
     ttk.Button(frame, text="添加水印", command=lambda: showBut(1)).place(relx=.02, rely=.1)
     ttk.Button(frame, text="查看水印", command=lambda: showBut(2)).place(relx=.02, rely=.2)
     ttk.Button(
-        frame, text="介绍", width=8, command=lambda: messagebox.showinfo(title="提示信息",
-                                                                         message="blind_watermark是一个可以添加、提取图片盲水印的Python工具，支持添加数字、嵌入图片、嵌入文本、嵌入二进制四种方式。可以防止旋转角度、随机截图、多遮挡、纵向裁剪、横向裁剪、缩放攻击等效果。"
-                                                                                 "\n项目地址：https://github.com/guofei9987/blind_watermark/"
-                                                                                 "\n开源协议：MIT"
-                                                                                 "\n工具箱的作者只对文本型盲水印有研究，所以此处功能有限，可见水印另请高明"
-                                                                                 "\n图片路径中含有中文字符可能会导致水印添加失败，由于作者实力不济，图片路径中只允许有一个“.”，否则也会导致失败"
-                                                                                 "\n运行结果框中未出现“成功”则表示失败"
-                                                                                 "\n添加盲水印的图片大小会变大，清晰度会下降"
-                                                                         )
+        frame, text="介绍", width=8, command=lambda: messagebox.showinfo(
+            title="提示信息",
+            message="blind_watermark是一个可以添加、提取图片盲水印的Python工具，支持添加数字、嵌入图片、嵌入文本、嵌入二进制四种方式。可以防止旋转角度、随机截图、多遮挡、纵向裁剪、横向裁剪、缩放攻击等效果。"
+                    "\n项目地址：https://github.com/guofei9987/blind_watermark/"
+                    "\n开源协议：MIT"
+                    "\n工具箱的作者只对文本型盲水印有研究，所以此处功能有限，可见水印另请高明"
+                    "\n图片路径中含有中文字符可能会导致水印添加失败，由于作者实力不济，图片路径中只允许有一个“.”，否则也会导致失败"
+                    "\n运行结果框中未出现“成功”则表示失败"
+                    "\n添加盲水印的图片大小会变大，清晰度会下降"
+        )
     ).place(relx=.9, rely=.8)
 
     ttk.Button(
-        frame, text="普通水印", command=lambda: os.system("start .\\BoxTools\\visibleWaterMark.pyw")
+        frame, text="普通水印", command=lambda: os.startfile(".\\BoxTools\\visibleWaterMark.pyw")
     ).place(relx=.02, rely=.3)
 
 

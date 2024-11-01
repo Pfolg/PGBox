@@ -7,9 +7,24 @@ import tkinter.messagebox as tkm
 import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 from PIL import Image
-from tkinter import filedialog
+from tkinter import filedialog, colorchooser
 from pyzbar.pyzbar import decode
 import cv2
+
+
+def choose_color(x):
+    color = colorchooser.askcolor(title="Color")
+    if color[1]:
+        x["background"] = color[1]
+
+
+def find_picture(x):
+    win = tk.Tk()
+    win.withdraw()
+    file_path = filedialog.askopenfilename()
+    if file_path:
+        x.set(file_path)
+    win.destroy()
 
 
 def QRCodeMaker(frame):
@@ -31,23 +46,15 @@ def QRCodeMaker(frame):
                                 message=f'UnicodeEncodeError: '
                                         f'\n\'latin-1\' codec can\'t encode characters in position 0-{len(txt)}'
                                         f'\nClick \"确定\" and QUIT')
-                sys.exit()
-            try:
-                code.add_data(txt)
-                code.make(fit=True)
-                code_img = code.make_image(fill_color=l2, back_color=l1)
-            except ValueError:
-                tkm.showwarning(title='ValueError',
-                                message=f'ValueError: \n'
-                                        f'unknown color specifier: {l2} or {l1}\n'
-                                        f'Click \"确定\" and QUIT')
                 return
+            code.add_data(txt)
+            code.make(fit=True)
+            code_img = code.make_image(fill_color=l2, back_color=l1)
+
             # show()
             code_size_w, code_size_h = code_img.size
             ratio = 6
-            if gl == '':
-                pass
-            else:  # 粘贴图片
+            if gl:
                 logo = Image.open(gl)
                 logo_w, logo_h = int(code_size_w / ratio), int(code_size_h / ratio)
                 icon = logo.resize(
@@ -64,26 +71,11 @@ def QRCodeMaker(frame):
             #     code_img.save(file)
             print('Done')
 
-    def part1():
-        print('Loading......')
-        a, b, c, d = inputBox.get("1.0", "end").strip(), choose_color2.get(), choose_color1.get(), get_logo.get()
-        main_pro(a, b, c, d)
+    ttk.Label(
+        frame, text='二维码生成',
+        font=(r'C:\Windows\Fonts\msyh.ttc', 20), background="#b3baba",
+        compound='center').place(relx=0.5, rely=0.05, anchor='center')
 
-    def part0():
-        main_label = ttk.Label(
-            frame, text='二维码生成',
-            font=(r'C:\Windows\Fonts\msyh.ttc', 20), background="#b3baba",
-            compound='center')
-        main_label.place(relx=0.5, rely=0.05, anchor='center')
-
-    def find_picture(x):
-        win = tk.Tk()
-        win.withdraw()
-        file_path = filedialog.askopenfilename()
-        x.set(file_path)
-        win.destroy()
-
-    part0()
     # 标签
     ttk.Label(
         frame,
@@ -101,10 +93,10 @@ def QRCodeMaker(frame):
     inputBox.place(relx=.05, rely=.3)
 
     # 背景颜色
-    choose_color1 = tk.StringVar()
-    choose_color1.set('#FFFFFF')
-    cc1 = ttk.Entry(frame, width=10, textvariable=choose_color1)
-    cc1.place(relx=0.8, rely=0.2)
+    cc1_color = tk.Button(
+        frame, width=3, relief="groove", command=lambda: choose_color(cc1_color), background="#ffffff", text=""
+    )
+    cc1_color.place(relx=0.8, rely=0.2)
 
     ttk.Label(
         frame,
@@ -113,11 +105,10 @@ def QRCodeMaker(frame):
         compound='center').place(relx=0.65, rely=0.2)
 
     # 前景颜色
-    choose_color2 = tk.StringVar()
-    choose_color2.set('#000000')
-    cc2 = ttk.Entry(frame, width=10, textvariable=choose_color2)
-    cc2.place(relx=0.8, rely=0.3)
-
+    cc2_color = tk.Button(
+        frame, width=3, relief="groove", command=lambda: choose_color(cc2_color), background="#000000", text=""
+    )
+    cc2_color.place(relx=0.8, rely=0.3)
     ttk.Label(
         frame,
         text='前景颜色',
@@ -131,17 +122,15 @@ def QRCodeMaker(frame):
         font=(r'C:\Windows\Fonts\msyh.ttc', 15),
         compound='center').place(relx=0.65, rely=0.4)
     get_logo = tk.StringVar()
-    tl = ttk.Entry(frame, width=15, textvariable=get_logo)
-    # tl.delete(0, 'end')
-    # tl.insert(0, '*.png')
-    tl.place(relx=0.75, rely=0.4)
+    ttk.Entry(frame, width=15, textvariable=get_logo).place(relx=0.75, rely=0.4)
 
     ttk.Button(
         frame,
         text='生成',
         width=7,
         compound='center',
-        command=part1).place(relx=0.75, rely=0.5)
+        command=lambda: main_pro(inputBox.get("1.0", "end").strip(), cc2_color["background"], cc1_color[
+            "background"], get_logo.get())).place(relx=0.75, rely=0.5)
     # 把部件贴上去
 
     ttk.Button(
@@ -149,7 +138,7 @@ def QRCodeMaker(frame):
         text='导入',
         width=7,
         compound='top',
-        command=lambda: find_picture(get_logo)).place(relx=0.65, rely=0.5)
+        command=lambda: find_picture(get_logo)).place(relx=0.9, rely=0.4)
 
     # 二维码识别
     sBox = ScrolledText(frame, width=30, height=5, state="disabled")

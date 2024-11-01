@@ -9,12 +9,14 @@ import json
 
 def openWeather(frame):
     try:
-        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF:
+        with open(".\\setting\\Config.json", "r", encoding="utf-8") as myF:
             myDict = json.load(myF)
             city = myDict.get("city")
             opwAPI = myDict.get("openweatherAPI")
-            if not city and opwAPI:
-                return  # 如果没有城市和API就终止函数
+            if city and opwAPI:
+                pass  # 如果没有城市和API就终止函数
+            else:
+                return
     except BaseException:
         return
     language = 'zh_cn'  # 简体中文  &lang={language}
