@@ -51,14 +51,16 @@
 - 安装依赖
 
     ~~~shell
-    pip install -r requirements.txt
+    pip install -r .\\resource\\requirements.txt
     ~~~
 
 - 双击使用！
 
 ### way-2
 
-- 双击 安装依赖.bat
+- 以管理员身份运行 安装依赖.exe
+
+安装依赖一般需要较长时间
 
 - 双击 启动主程序.bat
 

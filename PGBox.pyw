@@ -17,14 +17,14 @@ from BoxTools.aboutPG import checkTag
 import ctypes
 
 AppName = "PGBox"
-AppVersion = "v1.0.12"  # 这里可以设置任意文本，于是我放了一个版本号在这里
+# AppVersion = "v1.1.1"  # 这里可以设置任意文本，于是我放了一个版本号在这里
 icoPath = ".\\resource\\pg.ico"
 pngPath = ".\\resource\\pg.png"
-ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(AppVersion)
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(AppName)
 # time.sleep(5)
 
 try:
-    basicFileAsk = open(".\\setting\\Config.txt", "r", encoding="utf-8")
+    basicFileAsk = open(".\\setting\\Config.json", "r", encoding="utf-8")
     PGDict = json.load(basicFileAsk)
     agree = PGDict.get("agree")
     XHide = PGDict.get("XHide")
@@ -40,14 +40,17 @@ def openLICENSE(e):
 
 if not agree:
     def writeTure():
-        if not os.path.exists(".\\setting\\Config.txt"):  # 如果不存在配置文件就创建
-            os.mkdir(".\\setting")
-        with open(".\\setting\\Config.txt", "w", encoding="utf-8") as firstFile:
+        if not os.path.exists(".\\setting\\Config.json"):  # 如果不存在配置文件就创建
+            try:
+                os.mkdir(".\\setting")
+            except FileExistsError:
+                pass
+        with open(".\\setting\\Config.json", "w", encoding="utf-8") as firstFile:
             json.dump({"Warning": "请不要随意更改这个文件"}, firstFile, ensure_ascii=False, indent=4)  # 初始化文件夹
-        with open(".\\setting\\Config.txt", "r", encoding="utf-8") as myF1:
+        with open(".\\setting\\Config.json", "r", encoding="utf-8") as myF1:
             myDict1 = json.load(myF1)
             myDict1["agree"] = True
-        with open(".\\setting\\Config.txt", "w", encoding="utf-8") as file:
+        with open(".\\setting\\Config.json", "w", encoding="utf-8") as file:
             json.dump(myDict1, file, ensure_ascii=False, indent=4)
         # 重启是为了避免这个窗口影响主窗口
         ask_win.destroy()
@@ -56,13 +59,16 @@ if not agree:
 
 
     ask_win = tk.Tk()
-    ask_win.title("{0} {1}".format(AppName, AppVersion))
+    ask_win.title(AppName)
     a_screen_w, a_screen_h = ask_win.winfo_screenwidth(), ask_win.winfo_screenheight()
     a_w, a_h = int(a_screen_w / 4), int(a_screen_h / 4)
     ask_win.geometry(f'{a_w}x{a_h}+{int(a_screen_w / 3)}+{int(a_screen_h / 3)}')
     ask_win.resizable(False, False)
-    ask_win.iconbitmap(icoPath)
-    ask_win.wm_iconbitmap(pngPath)  # 这一句和最上面上面的两句相关联,但是放在这里用处不大(大概
+    try:
+        ask_win.iconbitmap(icoPath)
+        ask_win.wm_iconbitmap(pngPath)  # 这一句和最上面上面的两句相关联,但是放在这里用处不大(大概
+    except BaseException:
+        pass
     # ask_win.attributes('-alpha', 0.9)
 
     tk.Label(ask_win, text="\n继续使用本软件\n即表示您已阅读并同意本软件的", font=("微软雅黑", 16)).pack()
@@ -104,7 +110,7 @@ def drawName(canva, info=AppName):
 
 
 window = tk.Tk()
-window.title("{0} {1}".format(AppName, AppVersion))
+window.title(AppName)
 screen_w, screen_h = window.winfo_screenwidth(), window.winfo_screenheight()
 w, h = int(screen_w / 2), int(screen_h / 2)
 window.geometry(f'{w}x{h}+{int(screen_w / 4)}+{int(screen_h / 4)}')
@@ -113,18 +119,18 @@ window.iconbitmap(icoPath)
 window.wm_iconbitmap(icoPath)  # 这一句和最上面上面的两句相关联
 window.attributes('-alpha', 0.9)
 
-menu = (
+menu = [
     MenuItem("检查更新", action=checkTag),
     MenuItem("官方网站", action=lambda: os.system("start https://github.com/Pfolg/PGBox")),
     MenuItem("设置", action=lambda: os.system("start .\\Setting.pyw")),
     MenuItem('PGBox', action=show_window, default=True, visible=False),
     Menu.SEPARATOR,
     MenuItem("计时器", action=lambda: os.system("start .\\BoxTools\\TimerAPP.pyw")),
-    MenuItem("定时关机", lambda: threading.Thread(target=lambda: os.system(".\\BoxTools\\autoShutdown.py")).start()),
+    MenuItem("定时关机", lambda: threading.Thread(target=lambda: os.system(".\\BoxTools\\autoShutdownPro.py")).start()),
     MenuItem("txt文件加解密", action=lambda: os.system("start .\\BoxTools\\protectTxt.py")),
     Menu.SEPARATOR,
     MenuItem('退出', quit_window),
-)
+]
 image = Image.open(pngPath)
 icon = pystray.Icon("icon", image, AppName, menu)
 

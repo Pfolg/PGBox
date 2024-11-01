@@ -14,16 +14,28 @@ import win32com.client
 import webbrowser
 import urllib.parse
 from BoxTools import makeFilesPhot, musicPlayer, QRCodeMaker, randomName, ThirdPackage, keyWordsAnalysis, FrameWin, \
-    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, otherFunction, moneyConvert, makeKey, \
-    wifiInfor, frameEntertainment, openWeather, aboutPG, frameString
+    singleDouble, BoxMails, findLocation, frameTranslate, FBWM, FrameSetting, moneyConvert, makeKey, \
+    frameEntertainment, openWeather, aboutPG, frameString
 
 globalColor = "#c7dddd"
+listSentence = ""
 
 
-def openFile(path=".\\README.md"):
-    kk = threading.Thread(target=lambda: os.system(path))
-    kk.start()
-    kk = None
+def findSentencesFile():
+    global listSentence
+    if os.path.exists(".\\setting\\Setting-APIuse.txt"):
+        with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
+            listSentence = file.readlines()
+            # print(listSentence)
+
+
+threading.Thread(target=findSentencesFile).start()
+# def openFile(path=".\\README.md"):
+
+
+#     kk = threading.Thread(target=lambda: os.system(path))
+#     kk.start()
+#     kk = None
 
 
 browsers = {
@@ -47,7 +59,7 @@ browsers = {
 def findBrowser():
     global browser
     try:
-        browserFile = open(".\\setting\\Config.txt", "r", encoding="utf-8")
+        browserFile = open(".\\setting\\Config.json", "r", encoding="utf-8")
         brDict = json.load(browserFile)
         browser = brDict.get("browser")
         browserFile.close()
@@ -62,44 +74,6 @@ def findBrowser():
 threading.Thread(target=findBrowser).start()
 
 
-def beautifulSentence(frame, w):
-    while True:
-        # 获取首页美文内容
-        try:
-            with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
-                listSentence = file.readlines()
-        except BaseException:
-            listSentence = ""
-
-        try:
-            if listSentence:
-                newList = [s.rstrip('\r\t\n') for s in listSentence]
-                sentence.set("    " + newList[random.randint(0, len(newList) - 1)])
-            else:
-                "WAY1"
-                # url = "https://v1.hitokoto.cn/"
-                # content = requests.get(url)
-                # sentence.set("    " + eval(content.text).get("hitokoto"))
-                # print(eval(content.text).get("hitokoto"))
-
-                "WAY2"
-                url = "https://tenapi.cn/v2/yiyan"
-                content = requests.get(url)
-                sentence.set("    "+content.text)
-                print(content.text)
-        except BaseException:
-            sentence.set("    Can't show sentence, please check your network or the Setting file...")
-        try:
-            ttk.Label(
-                frame, textvariable=sentence, font=("微软雅黑", 10), background=globalColor,
-                compound="center", width=w, foreground="#706b67"
-            ).place(relx=0, rely=.02, height=70)
-        except RuntimeError:
-            break
-        # 30秒刷新一次，多了会被网站列入黑名单
-        time.sleep(30)
-
-
 def search_in_browser(query):
     broUrl = browsers.get(browser)
     # 使用bing搜索指定的查询
@@ -109,18 +83,17 @@ def search_in_browser(query):
     webbrowser.open_new_tab(search_url)
 
 
-def on_enter(e):
-    search_in_browser(urlContent.get())
-
-
 def basicFrame0(w, h, window):
+    userName = win32com.client.Dispatch('WScript.Network').UserName
     # 初始窗口
     frame0 = ttk.Frame(window)
     frame0.place(relx=0, rely=0, width=w, height=h)
 
-    global urlContent, sentence
-    sentence = tkinter.StringVar()
     urlContent = tkinter.StringVar()
+
+    def on_enter(e):
+        search_in_browser(urlContent.get())
+
     uc_enter = ttk.Entry(frame0, width=60, textvariable=urlContent)
     uc_enter.place(relx=.2, rely=.2)
     ttk.Label(frame0, text=browser, background="#61afef", foreground="#ffffff").place(relx=.1, rely=.2)
@@ -128,13 +101,74 @@ def basicFrame0(w, h, window):
         frame0, text="🔍 Search...", width=10, command=lambda: search_in_browser(urlContent.get())
     ).place(relx=.8, rely=.2)
     uc_enter.bind('<Return>', on_enter)
-
     ttk.Label(frame0, width=w, background=globalColor, compound="center").place(relx=0, rely=.02, height=70)
-    ttk.Label(
-        frame0, textvariable=sentence, font=("微软雅黑", 10), background=globalColor,
-        compound="center", width=w, foreground="#706b67"
-    ).place(relx=0, rely=.02, height=70)
-    threading.Thread(target=lambda: beautifulSentence(frame0, w), daemon=True).start()
+
+    # def beautifulSentence():
+    #     # 获取首页美文内容
+    #     try:
+    #         with open(".\\setting\\Setting-APIuse.txt", 'r', encoding="utf-8") as file:
+    #             listSentence = file.readlines()
+    #             print(listSentence)
+    #     except BaseException:
+    #         listSentence = ""
+    #
+    #         if listSentence:
+    #             newList = [s.rstrip() for s in listSentence]
+    #             try:
+    #                 sentence.set(f"    {newList[random.randint(a=0, b=(len(newList) - 1))]}")
+    #             except BaseException:
+    #                 print("error")
+    #             # print(var.get())
+    #         else:
+    #             "WAY1"
+    #             # url = "https://v1.hitokoto.cn/"
+    #             # content = requests.get(url)
+    #             # sentence.set("    " + eval(content.text).get("hitokoto"))
+    #             # print(eval(content.text).get("hitokoto"))
+    #
+    #             "WAY2"
+    #             url = "https://tenapi.cn/v2/yiyan"
+    #             content = requests.get(url)
+    #             try:
+    #                 sentence.set(f"    {content.text}")
+    #             except BaseException:
+    #                 print("error")
+    #                 # print(content.text)
+    #                 sentence.set("    Can't show sentence, please check your network or the Setting file...")
+    #     # 30秒刷新一次，多了会被网站列入黑名单
+    #     window.after(30000, beautifulSentence)
+
+    def headSentence():
+        if listSentence:
+            sentence = listSentence[random.randint(a=0, b=(len(listSentence) - 1))].strip()
+        else:
+            try:
+                "WAY1"
+                # url = "https://v1.hitokoto.cn/"
+                # content = requests.get(url)
+                # sentence.set("    " + eval(content.text).get("hitokoto"))
+                # print(eval(content.text).get("hitokoto"))
+
+                "WAY2"
+                url = "https://tenapi.cn/v2/yiyan"
+                content = requests.get(url)
+                sentence = content.text
+            except BaseException:
+                sentence = "啊咧！获取不了美句，检查一下设置或网络连接状态哦！"
+        # 打印一下sentence
+        print(sentence)
+
+        # 设定标签
+        beautifulSentence = ttk.Label(
+            frame0, text=sentence, font=("微软雅黑", 10), background=globalColor,
+            compound="center", width=w, foreground="#706b67"
+        )
+        beautifulSentence.place(relx=.03, rely=.02, height=70)
+        # 30秒更新一次，多了会被网站列入黑名单
+        if len(sentence) > 50:
+            beautifulSentence.after(0, headSentence)
+        else:
+            beautifulSentence.after(30000, headSentence)
 
     # 显示天气
     openWeather.openWeather(frame0)
@@ -154,7 +188,6 @@ def basicFrame0(w, h, window):
             text = "晚上好!"
         clock.place(relx=.01, rely=.95)
         # 获取当前登录的用户名称
-        userName = win32com.client.Dispatch('WScript.Network').UserName
         ttk.Label(frame0, text=f"{text} {userName}", foreground="#000000").place(relx=.25, rely=.95)
         clock.after(1000, get_time)  # 1000ms=1s
 
@@ -188,7 +221,6 @@ def basicFrame0(w, h, window):
     frameBlindWaterMark = ttk.Frame(window)
     frameMoneyConvert = ttk.Frame(window)
     framePassword = ttk.Frame(window)
-    frameWiFi = ttk.Frame(window)
     frameM = ttk.Frame(window)
     frameStr = ttk.Frame(window)
 
@@ -215,12 +247,11 @@ def basicFrame0(w, h, window):
         "盲水印工具": frameBlindWaterMark,
         "货币转换器": frameMoneyConvert,
         "密码生成": framePassword,
-        "WiFi": frameWiFi,
+        "字符串运算": frameStr,
 
         "Bug-3": 3,
 
         "Entertainment": frameM,
-        "字符串运算": frameStr,
 
     }
 
@@ -253,8 +284,6 @@ def basicFrame0(w, h, window):
     moneyConvert.moneyConvert(frameMoneyConvert)
     # 密码生成
     makeKey.keyFrame(framePassword)
-    # WiFi
-    wifiInfor.wifiFrame(frameWiFi)
     # 二刺猿
     frameEntertainment.EntertainmentFrame(frameM)
     # 字符串运算
@@ -298,4 +327,7 @@ def basicFrame0(w, h, window):
     aboutPG.PGAbout(frameAbout)
     buttons(frameAbout, "关于", .8, .9, 8)
 
-    get_time()
+    threading.Thread(target=headSentence, daemon=True).start()
+    threading.Thread(target=get_time, daemon=True).start()
+    # headSentence()
+    # get_time()
